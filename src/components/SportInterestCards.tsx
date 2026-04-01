@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { OlympicEvent, SPORT_ICONS } from "@/lib/types";
 import { StarRating } from "./StarRating";
+import { X } from "lucide-react";
 
 interface Props {
   events: OlympicEvent[];
