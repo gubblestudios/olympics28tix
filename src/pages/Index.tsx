@@ -57,7 +57,15 @@ export default function Index() {
     return events.filter((e) => shortlisted.has(e.sessionCode));
   }, [events, shortlisted]);
 
-  const displayEvents = tab === "shortlist" ? shortlistEvents : events;
+  const excludedSports = useMemo(() => {
+    const set = new Set<string>();
+    Object.entries(sportInterests).forEach(([k, v]) => { if (v === -1) set.add(k); });
+    return set;
+  }, [sportInterests]);
+
+  const filteredEvents = useMemo(() => events.filter((e) => !excludedSports.has(e.sport)), [events, excludedSports]);
+
+  const displayEvents = tab === "shortlist" ? shortlistEvents : filteredEvents;
 
   const handleInterest = useCallback((sport: string, val: number) => {
     setSportInterests((prev) => ({ ...prev, [sport]: val }));
