@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import { OlympicEvent } from "@/lib/types";
-import { getScoreBadgeClass } from "@/lib/scoring";
+import { OlympicEvent, Weights } from "@/lib/types";
+import { getScoreBadgeClass, computeScoreWithBreakdown } from "@/lib/scoring";
 import { StarRating } from "./StarRating";
 import { ArrowUpDown, ChevronDown } from "lucide-react";
 
