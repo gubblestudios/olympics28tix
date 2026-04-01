@@ -12,9 +12,11 @@ export function SummaryCards({ events, conflictCount, shortlistedCount, onConfli
   const total = events.length;
   const medalCount = events.filter((e) => e.isMedalEvent).length;
   const venues = new Set(events.map((e) => e.venue)).size;
+  const sportsCount = new Set(events.map((e) => e.sport)).size;
 
   const cards = [
     { label: "Total Sessions", value: total, icon: Calendar, color: "text-primary", onClick: undefined },
+    { label: "Sports", value: sportsCount, icon: Trophy, color: "text-primary", onClick: undefined },
     { label: "Medal Sessions", value: medalCount, icon: Medal, color: "text-accent", onClick: undefined },
     { label: "Unique Venues", value: venues, icon: MapPin, color: "text-primary", onClick: undefined },
     { label: "Conflicts Detected", value: conflictCount, icon: AlertTriangle, color: "text-destructive", onClick: onConflictsClick },
