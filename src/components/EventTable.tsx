@@ -164,6 +164,7 @@ export function EventTable({
           <thead>
             <tr className="olympic-header">
               <th className="px-2 py-2 text-left" style={{ width: 36 }}>★</th>
+              <th className="px-2 py-2 text-center" style={{ width: 70 }}>Final</th>
               <th className="px-2 py-2 text-left" style={{ width: 55 }}><SortBtn k="score">Score</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 150 }}><SortBtn k="sport">Sport</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 100 }}>Interest</th>
