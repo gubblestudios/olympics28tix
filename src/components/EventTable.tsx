@@ -2,11 +2,22 @@ import { useState, useMemo } from "react";
 import { OlympicEvent, Weights } from "@/lib/types";
 import { getScoreBadgeClass, computeScoreWithBreakdown } from "@/lib/scoring";
 import { StarRating } from "./StarRating";
-import { ArrowUpDown, ChevronDown } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 
 function formatDate(dateParsed: string): string {
   const d = new Date(dateParsed + "T00:00:00");
-  return d.toLocaleDateString("en-US", { weekday: "short", month: "long", day: "numeric" });
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+function getDayName(dateParsed: string): string {
+  const d = new Date(dateParsed + "T00:00:00");
+  return d.toLocaleDateString("en-US", { weekday: "short" });
+}
+
+function isWeekend(dateParsed: string): boolean {
+  const d = new Date(dateParsed + "T00:00:00");
+  const day = d.getDay();
+  return day === 0 || day === 6;
 }
 
 function formatTime(t: string): string {
@@ -68,6 +79,7 @@ export function EventTable({
 }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>("score");
   const [sortAsc, setSortAsc] = useState(false);
+  const [filterDay, setFilterDay] = useState("");
 
   const sports = useMemo(() => [...new Set(events.map((e) => e.sport))].sort(), [events]);
   const types = useMemo(() => [...new Set(events.map((e) => e.sessionType))].sort(), [events]);
@@ -78,9 +90,11 @@ export function EventTable({
       if (filterSport && e.sport !== filterSport) return false;
       if (filterType && e.sessionType !== filterType) return false;
       if (filterNeighborhood && e.neighborhood !== filterNeighborhood) return false;
+      if (filterDay === "weekend" && !isWeekend(e.dateParsed)) return false;
+      if (filterDay === "weekday" && isWeekend(e.dateParsed)) return false;
       return true;
     });
-  }, [events, filterSport, filterType, filterNeighborhood]);
+  }, [events, filterSport, filterType, filterNeighborhood, filterDay]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
@@ -127,6 +141,11 @@ export function EventTable({
           <option value="">All Neighborhoods</option>
           {hoods.map((n) => <option key={n} value={n}>{n}</option>)}
         </select>
+        <select value={filterDay} onChange={(e) => setFilterDay(e.target.value)} className={selectClass}>
+          <option value="">All Days</option>
+          <option value="weekend">Weekend</option>
+          <option value="weekday">Weekday</option>
+        </select>
         <div className="flex gap-4 text-xs text-muted-foreground self-center ml-auto items-center">
           <span className="flex items-center gap-1.5">
             <span className="w-4 h-3 rounded bg-accent/20 border border-accent/40" /> Starred
@@ -139,17 +158,18 @@ export function EventTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg border bg-card">
-        <table className="w-full text-sm" style={{ minWidth: 1050 }}>
+        <table className="w-full text-sm" style={{ minWidth: 1150 }}>
           <thead>
             <tr className="olympic-header">
               <th className="px-2 py-2 text-left" style={{ width: 36 }}>★</th>
-              <th className="px-2 py-2 text-left" style={{ width: 60 }}><SortBtn k="score">Score</SortBtn></th>
-              <th className="px-2 py-2 text-left" style={{ width: 130 }}><SortBtn k="sport">Sport</SortBtn></th>
-              <th className="px-2 py-2 text-left" style={{ width: 110 }}>Interest</th>
-              <th className="px-2 py-2 text-left" style={{ width: 130 }}><SortBtn k="date">Date</SortBtn></th>
-              <th className="px-2 py-2 text-left whitespace-nowrap" style={{ width: 150 }}><SortBtn k="startTime">Time</SortBtn></th>
-              <th className="px-2 py-2 text-left" style={{ width: 80 }}>Type</th>
-              <th className="px-2 py-2 text-left" style={{ minWidth: 120 }}>Description</th>
+              <th className="px-2 py-2 text-left" style={{ width: 55 }}><SortBtn k="score">Score</SortBtn></th>
+              <th className="px-2 py-2 text-left" style={{ width: 150 }}><SortBtn k="sport">Sport</SortBtn></th>
+              <th className="px-2 py-2 text-left" style={{ width: 100 }}>Interest</th>
+              <th className="px-2 py-2 text-left" style={{ width: 50 }}>Day</th>
+              <th className="px-2 py-2 text-left" style={{ width: 90 }}><SortBtn k="date">Date</SortBtn></th>
+              <th className="px-2 py-2 text-left whitespace-nowrap" style={{ width: 140 }}><SortBtn k="startTime">Time</SortBtn></th>
+              <th className="px-2 py-2 text-left" style={{ width: 75 }}>Type</th>
+              <th className="px-2 py-2 text-left" style={{ width: 200 }}>Description</th>
               <th className="px-2 py-2 text-left" style={{ width: 120 }}>Venue</th>
               <th className="px-2 py-2 text-left" style={{ width: 100 }}><SortBtn k="neighborhood">Area</SortBtn></th>
               <th className="px-2 py-2 text-center" style={{ width: 45 }}>Medal</th>
@@ -180,10 +200,11 @@ export function EventTable({
                   <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
                     <StarRating value={sportInterests[ev.sport] ?? 0} onChange={(v) => onInterestChange(ev.sport, v)} />
                   </td>
+                  <td className="px-2 py-1.5 text-xs whitespace-nowrap">{getDayName(ev.dateParsed)}</td>
                   <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatDate(ev.dateParsed)}</td>
                   <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
                   <td className="px-2 py-1.5 text-xs">{ev.sessionType}</td>
-                  <td className="px-2 py-1.5 text-xs truncate" title={ev.sessionDescription}>{ev.sessionDescription}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" style={{ maxWidth: 200 }} title={ev.sessionDescription}>{ev.sessionDescription}</td>
                   <td className="px-2 py-1.5 text-xs truncate" title={ev.venue}>{ev.venue}</td>
                   <td className="px-2 py-1.5 text-xs truncate" title={ev.neighborhood}>{ev.neighborhood}</td>
                   <td className="px-2 py-1.5 text-center">
