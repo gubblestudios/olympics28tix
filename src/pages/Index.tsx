@@ -5,7 +5,9 @@ import { computeScore, detectConflicts, exportCSV } from "@/lib/scoring";
 import { SummaryCards } from "@/components/SummaryCards";
 import { ScoringPanel } from "@/components/ScoringPanel";
 import { EventTable } from "@/components/EventTable";
-import { Download, List, Star } from "lucide-react";
+import { SportInterestCards } from "@/components/SportInterestCards";
+import { PreferencesCards } from "@/components/PreferencesCards";
+import { Download, List, Star, Settings } from "lucide-react";
 
 function loadFromLS<T>(key: string, fallback: T): T {
   try {
@@ -13,6 +15,8 @@ function loadFromLS<T>(key: string, fallback: T): T {
     return v ? JSON.parse(v) : fallback;
   } catch { return fallback; }
 }
+
+type AppStep = "sports" | "preferences" | "results";
 
 export default function Index() {
   const [events, setEvents] = useState<OlympicEvent[]>([]);
@@ -25,6 +29,12 @@ export default function Index() {
   const [filterType, setFilterType] = useState("");
   const [filterNeighborhood, setFilterNeighborhood] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  // Determine initial step: if user has already set interests, go straight to results
+  const [step, setStep] = useState<AppStep>(() => {
+    const saved = loadFromLS<Record<string, number>>("la28_interests", {});
+    return Object.keys(saved).length > 0 ? "results" : "sports";
+  });
 
   useEffect(() => { loadEvents().then(setEvents); }, []);
   useEffect(() => { localStorage.setItem("la28_weights", JSON.stringify(weights)); }, [weights]);
@@ -70,9 +80,52 @@ export default function Index() {
     URL.revokeObjectURL(url);
   };
 
+  // Onboarding steps
+  if (step === "sports" && events.length > 0) {
+    return (
+      <div className="min-h-screen bg-background">
+        <header className="olympic-header px-6 py-4 text-center">
+          <h1 className="text-xl font-bold tracking-tight">🏅 LA 2028 Ticket Planner</h1>
+          <p className="text-xs text-primary-foreground/70">Step 1 of 2 — Rate your sports</p>
+        </header>
+        <div className="p-6">
+          <SportInterestCards
+            events={events}
+            sportInterests={sportInterests}
+            onComplete={(interests) => {
+              setSportInterests(interests);
+              setStep("preferences");
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (step === "preferences") {
+    return (
+      <div className="min-h-screen bg-background">
+        <header className="olympic-header px-6 py-4 text-center">
+          <h1 className="text-xl font-bold tracking-tight">🏅 LA 2028 Ticket Planner</h1>
+          <p className="text-xs text-primary-foreground/70">Step 2 of 2 — Set your preferences</p>
+        </header>
+        <div className="p-6">
+          <PreferencesCards
+            initialWeights={weights}
+            onComplete={(w) => {
+              setWeights(w);
+              setStep("results");
+            }}
+            onBack={() => setStep("sports")}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Results view
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="text-2xl">🏅</span>
@@ -81,27 +134,32 @@ export default function Index() {
             <p className="text-xs text-primary-foreground/70">Diana's Olympic Session Picker</p>
           </div>
         </div>
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="text-xs text-primary-foreground/80 hover:text-accent transition-colors border border-primary-foreground/20 rounded px-3 py-1.5"
-        >
-          {sidebarOpen ? "Hide Weights" : "Show Weights"}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setStep("sports")}
+            className="text-xs text-primary-foreground/80 hover:text-accent transition-colors border border-primary-foreground/20 rounded px-3 py-1.5 flex items-center gap-1.5"
+          >
+            <Settings className="h-3.5 w-3.5" /> Edit Preferences
+          </button>
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="text-xs text-primary-foreground/80 hover:text-accent transition-colors border border-primary-foreground/20 rounded px-3 py-1.5"
+          >
+            {sidebarOpen ? "Hide Weights" : "Show Weights"}
+          </button>
+        </div>
       </header>
 
       <div className="flex">
-        {/* Sidebar */}
         {sidebarOpen && (
           <aside className="w-72 min-w-[280px] p-4 border-r bg-muted/30 shrink-0 overflow-y-auto max-h-[calc(100vh-64px)] sticky top-[64px]">
             <ScoringPanel weights={weights} onChange={setWeights} threshold={threshold} onThresholdChange={setThreshold} />
           </aside>
         )}
 
-        {/* Main */}
         <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
           <SummaryCards events={events} conflictCount={conflicts.size} shortlistedCount={shortlisted.size} />
 
-          {/* Tabs */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setTab("all")}

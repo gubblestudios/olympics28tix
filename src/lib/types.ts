@@ -28,12 +28,24 @@ export interface Weights {
 }
 
 export const NEIGHBORHOOD_RANKS: Record<string, number> = {
-  "Downtown LA": 5,
-  "Exposition Park": 4,
-  "Universal City": 4,
-  "Long Beach": 3,
-  "Pasadena": 2,
+  "Pasadena": 5,
+  "Downtown LA": 4,
+  "Exposition Park": 3,
+  "Universal City": 3,
+  "Long Beach": 2,
   "Anaheim": 1,
+};
+
+export const SPORT_ICONS: Record<string, string> = {
+  "Artistic Gymnastics": "🤸",
+  "Climbing": "🧗",
+  "Diving": "🤿",
+  "Flag Football": "🏈",
+  "Handball": "🤾",
+  "Squash": "🎾",
+  "Table Tennis": "🏓",
+  "Volleyball": "🏐",
+  "Wrestling": "🤼",
 };
 
 export const DEFAULT_WEIGHTS: Weights = {
