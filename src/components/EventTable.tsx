@@ -169,7 +169,7 @@ export function EventTable({
               <th className="px-2 py-2 text-left" style={{ width: 90 }}><SortBtn k="date">Date</SortBtn></th>
               <th className="px-2 py-2 text-left whitespace-nowrap" style={{ width: 140 }}><SortBtn k="startTime">Time</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 75 }}>Type</th>
-              <th className="px-2 py-2 text-left" style={{ width: 200 }}>Description</th>
+              <th className="px-2 py-2 text-left" style={{ width: 200, maxWidth: 200 }}>Description</th>
               <th className="px-2 py-2 text-left" style={{ width: 120 }}>Venue</th>
               <th className="px-2 py-2 text-left" style={{ width: 100 }}><SortBtn k="neighborhood">Area</SortBtn></th>
               <th className="px-2 py-2 text-center" style={{ width: 45 }}>Medal</th>
