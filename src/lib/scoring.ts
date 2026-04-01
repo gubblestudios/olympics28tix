@@ -14,11 +14,7 @@ export function getTimeScore(startTime: string): number {
 }
 
 export function computeScore(event: OlympicEvent, weights: Weights, sportInterests: Record<string, number>): number {
-  const { breakdown } = computeScoreWithBreakdown(event, weights, sportInterests);
-  const maxPossible = weights.interest + weights.medal + weights.indoor + weights.neighborhood + weights.evening;
-  if (maxPossible === 0) return 0;
-  const raw = breakdown.interest.weighted + breakdown.medal.weighted + breakdown.indoor.weighted + breakdown.neighborhood.weighted + breakdown.evening.weighted;
-  return Math.round((raw / maxPossible) * 100);
+  return computeScoreWithBreakdown(event, weights, sportInterests).score;
 }
 
 export interface ScoreBreakdown {
@@ -44,7 +40,10 @@ export function computeScoreWithBreakdown(event: OlympicEvent, weights: Weights,
     evening: { raw: evening, weighted: evening * weights.evening },
   };
 
-  const maxPossible = weights.interest + weights.medal + weights.indoor + weights.neighborhood + weights.evening;
+  // Medal and indoor are bonus-only: exclude their weight from maxPossible when the event doesn't have the trait
+  const maxPossible = weights.interest + weights.neighborhood + weights.evening
+    + (event.isMedalEvent ? weights.medal : 0)
+    + (event.indoorOutdoor === "indoor" ? weights.indoor : 0);
   const raw = breakdown.interest.weighted + breakdown.medal.weighted + breakdown.indoor.weighted + breakdown.neighborhood.weighted + breakdown.evening.weighted;
   const score = maxPossible === 0 ? 0 : Math.round((raw / maxPossible) * 100);
 
