@@ -131,20 +131,20 @@ export function EventTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg border bg-card">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm table-fixed">
           <thead>
             <tr className="olympic-header">
-              <th className="p-2 text-left w-8">★</th>
-              <th className="p-2 text-left"><SortBtn k="score">Score</SortBtn></th>
-              <th className="p-2 text-left"><SortBtn k="sport">Sport</SortBtn></th>
-              <th className="p-2 text-left">Interest</th>
-              <th className="p-2 text-left"><SortBtn k="date">Date</SortBtn></th>
-              <th className="p-2 text-left"><SortBtn k="startTime">Time</SortBtn></th>
-              <th className="p-2 text-left">Type</th>
-              <th className="p-2 text-left max-w-[250px]">Description</th>
-              <th className="p-2 text-left">Venue</th>
-              <th className="p-2 text-left"><SortBtn k="neighborhood">Area</SortBtn></th>
-              <th className="p-2 text-center">Medal</th>
+              <th className="px-1.5 py-2 text-left w-8">★</th>
+              <th className="px-1.5 py-2 text-left w-14"><SortBtn k="score">Score</SortBtn></th>
+              <th className="px-1.5 py-2 text-left w-[120px]"><SortBtn k="sport">Sport</SortBtn></th>
+              <th className="px-1.5 py-2 text-left w-20">Interest</th>
+              <th className="px-1.5 py-2 text-left w-[130px]"><SortBtn k="date">Date</SortBtn></th>
+              <th className="px-1.5 py-2 text-left w-[140px]"><SortBtn k="startTime">Time</SortBtn></th>
+              <th className="px-1.5 py-2 text-left w-[80px]">Type</th>
+              <th className="px-1.5 py-2 text-left">Description</th>
+              <th className="px-1.5 py-2 text-left w-[120px]">Venue</th>
+              <th className="px-1.5 py-2 text-left w-[90px]"><SortBtn k="neighborhood">Area</SortBtn></th>
+              <th className="px-1.5 py-2 text-center w-12">Medal</th>
             </tr>
           </thead>
           <tbody>
