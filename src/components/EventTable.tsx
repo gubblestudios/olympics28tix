@@ -42,7 +42,7 @@ interface Props {
   conflicts: Set<string>;
 }
 
-type SortKey = "score" | "date" | "sport" | "startTime" | "neighborhood";
+type SortKey = "score" | "date" | "sport" | "startTime" | "neighborhood" | "sessionType" | "sessionDescription" | "venue";
 
 function ScoreTooltip({ event, weights, sportInterests }: { event: OlympicEvent; weights: Weights; sportInterests: Record<string, number> }) {
   const { score, breakdown } = computeScoreWithBreakdown(event, weights, sportInterests);
