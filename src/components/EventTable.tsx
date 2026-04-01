@@ -183,9 +183,7 @@ export function EventTable({
                   <td className="px-1.5 py-1.5 text-xs truncate" title={formatDate(ev.dateParsed)}>{formatDate(ev.dateParsed)}</td>
                   <td className="px-1.5 py-1.5 text-xs truncate" title={`${formatTime(ev.startTime)}–${formatTime(ev.endTime)}`}>{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
                   <td className="px-1.5 py-1.5 text-xs truncate" title={ev.sessionType}>{ev.sessionType}</td>
-                  <td className="px-1.5 py-1.5 text-xs">
-                    <span className="block truncate" title={ev.sessionDescription}>{ev.sessionDescription}</span>
-                  </td>
+                  <td className="px-1.5 py-1.5 text-xs truncate" title={ev.sessionDescription}>{ev.sessionDescription}</td>
                   <td className="px-1.5 py-1.5 text-xs truncate" title={ev.venue}>{ev.venue}</td>
                   <td className="px-1.5 py-1.5 text-xs truncate" title={ev.neighborhood}>{ev.neighborhood}</td>
                   <td className="px-1.5 py-1.5 text-center">
