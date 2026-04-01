@@ -57,7 +57,15 @@ export default function Index() {
     return events.filter((e) => shortlisted.has(e.sessionCode));
   }, [events, shortlisted]);
 
-  const displayEvents = tab === "shortlist" ? shortlistEvents : events;
+  const excludedSports = useMemo(() => {
+    const set = new Set<string>();
+    Object.entries(sportInterests).forEach(([k, v]) => { if (v === -1) set.add(k); });
+    return set;
+  }, [sportInterests]);
+
+  const filteredEvents = useMemo(() => events.filter((e) => !excludedSports.has(e.sport)), [events, excludedSports]);
+
+  const displayEvents = tab === "shortlist" ? shortlistEvents : filteredEvents;
 
   const handleInterest = useCallback((sport: string, val: number) => {
     setSportInterests((prev) => ({ ...prev, [sport]: val }));
@@ -167,7 +175,7 @@ export default function Index() {
         )}
 
         <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
-          <SummaryCards events={events} conflictCount={conflicts.size} shortlistedCount={shortlisted.size} onConflictsClick={() => setTab("planner")} />
+          <SummaryCards events={filteredEvents} conflictCount={conflicts.size} shortlistedCount={shortlisted.size} onConflictsClick={() => setTab("planner")} />
 
           <div className="flex items-center gap-2">
             <button
