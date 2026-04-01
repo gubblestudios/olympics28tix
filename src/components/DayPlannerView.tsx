@@ -35,6 +35,7 @@ export function DayPlannerView({
 }: DayPlannerViewProps) {
   const [expandedDays, setExpandedDays] = useState<Set<string>>(new Set());
   const [showOnlyStarred, setShowOnlyStarred] = useState(false);
+  const [showOnlyConflicts, setShowOnlyConflicts] = useState(false);
 
   const filteredEvents = useMemo(() => {
     if (!showOnlyStarred) return events;
