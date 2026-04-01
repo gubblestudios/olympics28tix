@@ -29,7 +29,7 @@ export default function Index() {
   const [filterSport, setFilterSport] = useState("");
   const [filterType, setFilterType] = useState("");
   const [filterNeighborhood, setFilterNeighborhood] = useState("");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Determine initial step: if user has already set interests, go straight to results
   const [step, setStep] = useState<AppStep>(() => {
