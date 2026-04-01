@@ -1,16 +1,144 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect, useMemo, useCallback } from "react";
+import { OlympicEvent, Weights, DEFAULT_WEIGHTS } from "@/lib/types";
+import { loadEvents } from "@/lib/parseCSV";
+import { computeScore, detectConflicts, exportCSV } from "@/lib/scoring";
+import { SummaryCards } from "@/components/SummaryCards";
+import { ScoringPanel } from "@/components/ScoringPanel";
+import { EventTable } from "@/components/EventTable";
+import { Download, List, Star } from "lucide-react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+function loadFromLS<T>(key: string, fallback: T): T {
+  try {
+    const v = localStorage.getItem(key);
+    return v ? JSON.parse(v) : fallback;
+  } catch { return fallback; }
+}
+
+export default function Index() {
+  const [events, setEvents] = useState<OlympicEvent[]>([]);
+  const [weights, setWeights] = useState<Weights>(() => loadFromLS("la28_weights", DEFAULT_WEIGHTS));
+  const [sportInterests, setSportInterests] = useState<Record<string, number>>(() => loadFromLS("la28_interests", {}));
+  const [shortlisted, setShortlisted] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_shortlist", [])));
+  const [threshold, setThreshold] = useState(() => loadFromLS("la28_threshold", 50));
+  const [tab, setTab] = useState<"all" | "shortlist">("all");
+  const [filterSport, setFilterSport] = useState("");
+  const [filterType, setFilterType] = useState("");
+  const [filterNeighborhood, setFilterNeighborhood] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  useEffect(() => { loadEvents().then(setEvents); }, []);
+  useEffect(() => { localStorage.setItem("la28_weights", JSON.stringify(weights)); }, [weights]);
+  useEffect(() => { localStorage.setItem("la28_interests", JSON.stringify(sportInterests)); }, [sportInterests]);
+  useEffect(() => { localStorage.setItem("la28_shortlist", JSON.stringify([...shortlisted])); }, [shortlisted]);
+  useEffect(() => { localStorage.setItem("la28_threshold", JSON.stringify(threshold)); }, [threshold]);
+
+  const scores = useMemo(() => {
+    const map: Record<string, number> = {};
+    events.forEach((e) => { map[e.sessionCode] = computeScore(e, weights, sportInterests); });
+    return map;
+  }, [events, weights, sportInterests]);
+
+  const conflicts = useMemo(() => detectConflicts(events, shortlisted), [events, shortlisted]);
+
+  const shortlistEvents = useMemo(() => {
+    return events.filter((e) => shortlisted.has(e.sessionCode) || (scores[e.sessionCode] ?? 0) >= threshold);
+  }, [events, shortlisted, scores, threshold]);
+
+  const displayEvents = tab === "shortlist" ? shortlistEvents : events;
+
+  const handleInterest = useCallback((sport: string, val: number) => {
+    setSportInterests((prev) => ({ ...prev, [sport]: val }));
+  }, []);
+
+  const handleToggleShortlist = useCallback((code: string) => {
+    setShortlisted((prev) => {
+      const next = new Set(prev);
+      if (next.has(code)) next.delete(code);
+      else next.add(code);
+      return next;
+    });
+  }, []);
+
+  const handleExport = () => {
+    const csv = exportCSV(shortlistEvents, scores);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "la28_shortlist.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="olympic-header px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl">🏅</span>
+          <div>
+            <h1 className="text-xl font-bold tracking-tight">LA 2028 Ticket Planner</h1>
+            <p className="text-xs text-primary-foreground/70">Diana's Olympic Session Picker</p>
+          </div>
+        </div>
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="text-xs text-primary-foreground/80 hover:text-accent transition-colors border border-primary-foreground/20 rounded px-3 py-1.5"
+        >
+          {sidebarOpen ? "Hide Weights" : "Show Weights"}
+        </button>
+      </header>
+
+      <div className="flex">
+        {/* Sidebar */}
+        {sidebarOpen && (
+          <aside className="w-72 min-w-[280px] p-4 border-r bg-muted/30 shrink-0 overflow-y-auto max-h-[calc(100vh-64px)] sticky top-[64px]">
+            <ScoringPanel weights={weights} onChange={setWeights} threshold={threshold} onThresholdChange={setThreshold} />
+          </aside>
+        )}
+
+        {/* Main */}
+        <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
+          <SummaryCards events={events} conflictCount={conflicts.size} shortlistedCount={shortlisted.size} />
+
+          {/* Tabs */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setTab("all")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "all" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+            >
+              <List className="h-4 w-4" /> All Sessions
+            </button>
+            <button
+              onClick={() => setTab("shortlist")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "shortlist" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+            >
+              <Star className="h-4 w-4" /> My Shortlist ({shortlistEvents.length})
+            </button>
+            {tab === "shortlist" && (
+              <button onClick={handleExport} className="ml-auto flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-accent text-accent-foreground hover:opacity-90 transition-opacity">
+                <Download className="h-3.5 w-3.5" /> Export CSV
+              </button>
+            )}
+          </div>
+
+          <EventTable
+            events={displayEvents}
+            scores={scores}
+            sportInterests={sportInterests}
+            onInterestChange={handleInterest}
+            shortlisted={shortlisted}
+            onToggleShortlist={handleToggleShortlist}
+            conflicts={conflicts}
+            filterSport={filterSport}
+            filterType={filterType}
+            filterNeighborhood={filterNeighborhood}
+            onFilterSport={setFilterSport}
+            onFilterType={setFilterType}
+            onFilterNeighborhood={setFilterNeighborhood}
+          />
+        </main>
+      </div>
     </div>
   );
-};
-
-const Index = PlaceholderIndex;
-
-export default Index;
+}
