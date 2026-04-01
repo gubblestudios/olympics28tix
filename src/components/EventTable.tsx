@@ -126,7 +126,7 @@ export function EventTable({
     </button>
   );
 
-  const selectClass = "text-xs bg-card border rounded px-2 py-1.5 text-foreground";
+  
 
   return (
     <div className="space-y-3">
