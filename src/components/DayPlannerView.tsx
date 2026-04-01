@@ -26,6 +26,12 @@ export function DayPlannerView({
   onToggleShortlist,
 }: DayPlannerViewProps) {
   const [expandedDays, setExpandedDays] = useState<Set<string>>(new Set());
+  const [showOnlyStarred, setShowOnlyStarred] = useState(false);
+
+  const filteredEvents = useMemo(() => {
+    if (!showOnlyStarred) return events;
+    return events.filter((e) => shortlisted.has(e.sessionCode));
+  }, [events, shortlisted, showOnlyStarred]);
 
   const dayGroups = useMemo(() => {
     const byDate: Record<string, OlympicEvent[]> = {};
