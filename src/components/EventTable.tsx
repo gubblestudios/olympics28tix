@@ -40,12 +40,6 @@ interface Props {
   finalList: Set<string>;
   onToggleFinal: (code: string) => void;
   conflicts: Set<string>;
-  filterSport: string;
-  filterType: string;
-  filterNeighborhood: string;
-  onFilterSport: (s: string) => void;
-  onFilterType: (s: string) => void;
-  onFilterNeighborhood: (s: string) => void;
 }
 
 type SortKey = "score" | "date" | "sport" | "startTime" | "neighborhood";
