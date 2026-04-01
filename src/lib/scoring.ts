@@ -1,4 +1,4 @@
-import { OlympicEvent, Weights, NEIGHBORHOOD_RANKS } from "./types";
+import { OlympicEvent, Weights, NEIGHBORHOOD_RANKS, getTravelTime, TravelWarning } from "./types";
 
 function timeToMinutes(t: string): number {
   const [h, m] = t.split(":").map(Number);
@@ -60,6 +60,37 @@ export function detectConflicts(events: OlympicEvent[], shortlisted: Set<string>
     }
   }
   return conflicts;
+}
+
+export function detectTravelIssues(events: OlympicEvent[], selectedCodes: Set<string>): TravelWarning[] {
+  const warnings: TravelWarning[] = [];
+  const selected = events.filter((e) => selectedCodes.has(e.sessionCode));
+
+  // Group by date
+  const byDate: Record<string, OlympicEvent[]> = {};
+  selected.forEach((e) => {
+    (byDate[e.dateParsed] ??= []).push(e);
+  });
+
+  for (const dateEvents of Object.values(byDate)) {
+    const sorted = [...dateEvents].sort((a, b) => timeToMinutes(a.startTime) - timeToMinutes(b.startTime));
+    for (let i = 0; i < sorted.length - 1; i++) {
+      const a = sorted[i];
+      const b = sorted[i + 1];
+      const gapMinutes = timeToMinutes(b.startTime) - timeToMinutes(a.endTime);
+      const travelMinutes = getTravelTime(a.neighborhood, b.neighborhood);
+
+      if (travelMinutes > 15 && gapMinutes < travelMinutes + 15) {
+        warnings.push({
+          eventA: a.sessionCode,
+          eventB: b.sessionCode,
+          travelMinutes,
+          gapMinutes,
+        });
+      }
+    }
+  }
+  return warnings;
 }
 
 export function exportCSV(events: OlympicEvent[], scores: Record<string, number>): string {

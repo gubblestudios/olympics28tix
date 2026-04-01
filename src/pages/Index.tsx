@@ -1,13 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { OlympicEvent, Weights, DEFAULT_WEIGHTS } from "@/lib/types";
 import { loadEvents } from "@/lib/parseCSV";
-import { computeScore, detectConflicts, exportCSV } from "@/lib/scoring";
+import { computeScore, detectConflicts, detectTravelIssues, exportCSV } from "@/lib/scoring";
 import { SummaryCards } from "@/components/SummaryCards";
 import { ScoringPanel } from "@/components/ScoringPanel";
 import { EventTable } from "@/components/EventTable";
 import { SportInterestCards } from "@/components/SportInterestCards";
 import { PreferencesCards } from "@/components/PreferencesCards";
-import { Download, List, Star, Settings } from "lucide-react";
+import { DayPlannerView } from "@/components/DayPlannerView";
+import { Download, List, Star, Settings, CalendarDays } from "lucide-react";
 
 function loadFromLS<T>(key: string, fallback: T): T {
   try {
@@ -24,7 +25,7 @@ export default function Index() {
   const [sportInterests, setSportInterests] = useState<Record<string, number>>(() => loadFromLS("la28_interests", {}));
   const [shortlisted, setShortlisted] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_shortlist", [])));
   const [threshold, setThreshold] = useState(() => loadFromLS("la28_threshold", 50));
-  const [tab, setTab] = useState<"all" | "shortlist">("all");
+  const [tab, setTab] = useState<"all" | "shortlist" | "planner">("all");
   const [filterSport, setFilterSport] = useState("");
   const [filterType, setFilterType] = useState("");
   const [filterNeighborhood, setFilterNeighborhood] = useState("");
@@ -49,6 +50,12 @@ export default function Index() {
   }, [events, weights, sportInterests]);
 
   const conflicts = useMemo(() => detectConflicts(events, shortlisted), [events, shortlisted]);
+  const shortlistCodes = useMemo(() => {
+    const codes = new Set(shortlisted);
+    events.forEach((e) => { if ((scores[e.sessionCode] ?? 0) >= threshold) codes.add(e.sessionCode); });
+    return codes;
+  }, [events, shortlisted, scores, threshold]);
+  const travelWarnings = useMemo(() => detectTravelIssues(events, shortlistCodes), [events, shortlistCodes]);
 
   const shortlistEvents = useMemo(() => {
     return events.filter((e) => shortlisted.has(e.sessionCode) || (scores[e.sessionCode] ?? 0) >= threshold);
@@ -173,6 +180,12 @@ export default function Index() {
             >
               <Star className="h-4 w-4" /> My Shortlist ({shortlistEvents.length})
             </button>
+            <button
+              onClick={() => setTab("planner")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "planner" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+            >
+              <CalendarDays className="h-4 w-4" /> Day Planner
+            </button>
             {tab === "shortlist" && (
               <button onClick={handleExport} className="ml-auto flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-accent text-accent-foreground hover:opacity-90 transition-opacity">
                 <Download className="h-3.5 w-3.5" /> Export CSV
@@ -180,21 +193,32 @@ export default function Index() {
             )}
           </div>
 
-          <EventTable
-            events={displayEvents}
-            scores={scores}
-            sportInterests={sportInterests}
-            onInterestChange={handleInterest}
-            shortlisted={shortlisted}
-            onToggleShortlist={handleToggleShortlist}
-            conflicts={conflicts}
-            filterSport={filterSport}
-            filterType={filterType}
-            filterNeighborhood={filterNeighborhood}
-            onFilterSport={setFilterSport}
-            onFilterType={setFilterType}
-            onFilterNeighborhood={setFilterNeighborhood}
-          />
+          {tab === "planner" ? (
+            <DayPlannerView
+              events={shortlistEvents}
+              scores={scores}
+              conflicts={conflicts}
+              travelWarnings={travelWarnings}
+              shortlisted={shortlisted}
+              onToggleShortlist={handleToggleShortlist}
+            />
+          ) : (
+            <EventTable
+              events={displayEvents}
+              scores={scores}
+              sportInterests={sportInterests}
+              onInterestChange={handleInterest}
+              shortlisted={shortlisted}
+              onToggleShortlist={handleToggleShortlist}
+              conflicts={conflicts}
+              filterSport={filterSport}
+              filterType={filterType}
+              filterNeighborhood={filterNeighborhood}
+              onFilterSport={setFilterSport}
+              onFilterType={setFilterType}
+              onFilterNeighborhood={setFilterNeighborhood}
+            />
+          )}
         </main>
       </div>
     </div>
