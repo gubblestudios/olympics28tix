@@ -28,9 +28,8 @@ export default function Index() {
   const [finalList, setFinalList] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_final", [])));
   
   const [tab, setTab] = useState<"all" | "shortlist" | "planner" | "final">("all");
-  const [filterSport, setFilterSport] = useState("");
-  const [filterType, setFilterType] = useState("");
-  const [filterNeighborhood, setFilterNeighborhood] = useState("");
+
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Determine initial step: if user has already set interests, go straight to results
