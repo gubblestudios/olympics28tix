@@ -125,10 +125,11 @@ export function EventTable({
                       {isShort ? "★" : "☆"}
                     </span>
                   </td>
-                  <td className="p-2">
+                  <td className="p-2 relative group">
                     <span className={getScoreBadgeClass(scores[ev.sessionCode] ?? 0)}>
                       {scores[ev.sessionCode] ?? 0}
                     </span>
+                    <ScoreTooltip event={ev} weights={weights} sportInterests={sportInterests} />
                   </td>
                   <td className="p-2 font-medium whitespace-nowrap">{ev.sport}</td>
                   <td className="p-2">
