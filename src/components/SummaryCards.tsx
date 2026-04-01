@@ -1,5 +1,5 @@
 import { OlympicEvent } from "@/lib/types";
-import { Calendar, Medal, MapPin, AlertTriangle } from "lucide-react";
+import { Calendar, Medal, MapPin, AlertTriangle, Trophy } from "lucide-react";
 
 interface Props {
   events: OlympicEvent[];
@@ -12,16 +12,18 @@ export function SummaryCards({ events, conflictCount, shortlistedCount, onConfli
   const total = events.length;
   const medalCount = events.filter((e) => e.isMedalEvent).length;
   const venues = new Set(events.map((e) => e.venue)).size;
+  const sportsCount = new Set(events.map((e) => e.sport)).size;
 
   const cards = [
     { label: "Total Sessions", value: total, icon: Calendar, color: "text-primary", onClick: undefined },
+    { label: "Sports", value: sportsCount, icon: Trophy, color: "text-primary", onClick: undefined },
     { label: "Medal Sessions", value: medalCount, icon: Medal, color: "text-accent", onClick: undefined },
     { label: "Unique Venues", value: venues, icon: MapPin, color: "text-primary", onClick: undefined },
     { label: "Conflicts Detected", value: conflictCount, icon: AlertTriangle, color: "text-destructive", onClick: onConflictsClick },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
       {cards.map((c) => (
         <div
           key={c.label}
