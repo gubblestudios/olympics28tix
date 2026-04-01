@@ -94,13 +94,14 @@ export default function Index() {
     });
   }, []);
 
-  const handleExport = () => {
-    const csv = exportCSV(shortlistEvents, scores);
+  const handleExport = (list: "shortlist" | "final") => {
+    const eventsToExport = list === "final" ? finalListEvents : shortlistEvents;
+    const csv = exportCSV(eventsToExport, scores);
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "la28_shortlist.csv";
+    a.download = list === "final" ? "la28_final_list.csv" : "la28_shortlist.csv";
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -216,11 +217,14 @@ export default function Index() {
             >
               <CheckCircle2 className="h-4 w-4" /> Final List ({finalListEvents.length})
             </button>
-            {(tab === "shortlist" || tab === "final") && (
-              <button onClick={handleExport} className="ml-auto flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-accent text-accent-foreground hover:opacity-90 transition-opacity">
-                <Download className="h-3.5 w-3.5" /> Export CSV
+            <div className="ml-auto flex items-center gap-1.5">
+              <button onClick={() => handleExport("shortlist")} className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-accent text-accent-foreground hover:opacity-90 transition-opacity">
+                <Download className="h-3.5 w-3.5" /> Export Shortlist
               </button>
-            )}
+              <button onClick={() => handleExport("final")} className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
+                <Download className="h-3.5 w-3.5" /> Export Final
+              </button>
+            </div>
           </div>
 
           {tab === "planner" ? (

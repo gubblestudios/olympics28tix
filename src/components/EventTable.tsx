@@ -42,7 +42,7 @@ interface Props {
   conflicts: Set<string>;
 }
 
-type SortKey = "score" | "date" | "sport" | "startTime" | "neighborhood";
+type SortKey = "score" | "date" | "sport" | "startTime" | "neighborhood" | "sessionType" | "sessionDescription" | "venue";
 
 function ScoreTooltip({ event, weights, sportInterests }: { event: OlympicEvent; weights: Weights; sportInterests: Record<string, number> }) {
   const { score, breakdown } = computeScoreWithBreakdown(event, weights, sportInterests);
@@ -108,6 +108,9 @@ export function EventTable({
         case "sport": cmp = a.sport.localeCompare(b.sport); break;
         case "startTime": cmp = a.startTime.localeCompare(b.startTime); break;
         case "neighborhood": cmp = a.neighborhood.localeCompare(b.neighborhood); break;
+        case "sessionType": cmp = a.sessionType.localeCompare(b.sessionType); break;
+        case "sessionDescription": cmp = a.sessionDescription.localeCompare(b.sessionDescription); break;
+        case "venue": cmp = a.venue.localeCompare(b.venue); break;
       }
       return sortAsc ? cmp : -cmp;
     });
@@ -158,9 +161,9 @@ export function EventTable({
               <th className="px-2 py-2 text-left" style={{ width: 60 }}>Day</th>
               <th className="px-2 py-2 text-left" style={{ width: 90 }}><SortBtn k="date">Date</SortBtn></th>
               <th className="px-2 py-2 text-left whitespace-nowrap" style={{ width: 140 }}><SortBtn k="startTime">Time</SortBtn></th>
-              <th className="px-2 py-2 text-left" style={{ width: 75 }}>Type</th>
-              <th className="px-2 py-2 text-left" style={{ width: 280, maxWidth: 280 }}>Description</th>
-              <th className="px-2 py-2 text-left" style={{ width: 70 }}>Venue</th>
+              <th className="px-2 py-2 text-left" style={{ width: 75 }}><SortBtn k="sessionType">Type</SortBtn></th>
+              <th className="px-2 py-2 text-left" style={{ width: 280, maxWidth: 280 }}><SortBtn k="sessionDescription">Description</SortBtn></th>
+              <th className="px-2 py-2 text-left" style={{ width: 70 }}><SortBtn k="venue">Venue</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 100 }}><SortBtn k="neighborhood">Area</SortBtn></th>
               <th className="px-2 py-2 text-center" style={{ width: 60 }}>Medal</th>
             </tr>
