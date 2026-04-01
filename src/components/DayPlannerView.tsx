@@ -17,6 +17,14 @@ function timeToMinutes(t: string): number {
   return h * 60 + m;
 }
 
+function formatTime(t: string): string {
+  if (!t || t === "TBD") return "TBD";
+  const [h, m] = t.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 || 12;
+  return `${h12}:${m.toString().padStart(2, "0")} ${ampm}`;
+}
+
 export function DayPlannerView({
   events,
   scores,
