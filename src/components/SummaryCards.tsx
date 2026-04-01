@@ -23,7 +23,7 @@ export function SummaryCards({ events, conflictCount, shortlistedCount, onConfli
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
       {cards.map((c) => (
         <div
           key={c.label}
