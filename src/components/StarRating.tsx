@@ -17,7 +17,7 @@ export function StarRating({ value, onChange, size = "sm" }: Props) {
           className="p-0 hover:scale-110 transition-transform"
         >
           <Star
-            className={`h-4 w-4 ${i <= value ? "fill-accent text-accent" : "text-muted-foreground/40"}`}
+            className={`${iconClass} ${i <= value ? "fill-accent text-accent" : "text-muted-foreground/40"}`}
           />
         </button>
       ))}
