@@ -1,5 +1,5 @@
 import { OlympicEvent } from "@/lib/types";
-import { Calendar, Medal, MapPin, AlertTriangle } from "lucide-react";
+import { Calendar, Medal, MapPin, AlertTriangle, Trophy } from "lucide-react";
 
 interface Props {
   events: OlympicEvent[];
