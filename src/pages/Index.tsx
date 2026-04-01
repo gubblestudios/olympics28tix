@@ -160,7 +160,7 @@ export default function Index() {
         )}
 
         <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
-          <SummaryCards events={events} conflictCount={conflicts.size} shortlistedCount={shortlisted.size} />
+          <SummaryCards events={events} conflictCount={conflicts.size} shortlistedCount={shortlisted.size} onConflictsClick={() => setTab("planner")} />
 
           <div className="flex items-center gap-2">
             <button
