@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { OlympicEvent, SPORT_ICONS, TravelWarning, getTravelTime } from "@/lib/types";
 import { getScoreBadgeClass } from "@/lib/scoring";
-import { ChevronDown, ChevronRight, Star, AlertTriangle, Car, Clock, MapPin } from "lucide-react";
+import { ChevronDown, ChevronRight, Star, AlertTriangle, Car, Clock, MapPin, CheckCircle2 } from "lucide-react";
 
 interface DayPlannerViewProps {
   events: OlympicEvent[];
