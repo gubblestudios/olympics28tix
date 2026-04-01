@@ -181,6 +181,7 @@ export function EventTable({
           <tbody>
             {sorted.map((ev) => {
               const isShort = shortlisted.has(ev.sessionCode);
+              const isFinal = finalList.has(ev.sessionCode);
               const isConflict = conflicts.has(ev.sessionCode);
               return (
                 <tr
@@ -192,6 +193,20 @@ export function EventTable({
                     <span className={`text-lg ${isShort ? "text-accent" : "text-muted-foreground/30"}`}>
                       {isShort ? "★" : "☆"}
                     </span>
+                  </td>
+                  <td className="px-2 py-1.5 text-center" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      onClick={() => onToggleFinal(ev.sessionCode)}
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium transition-colors ${
+                        isFinal
+                          ? "bg-primary/15 text-primary"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80"
+                      }`}
+                      title={isFinal ? "Remove from Final List" : "Add to Final List"}
+                    >
+                      <CheckCircle2 className={`h-3 w-3 ${isFinal ? "fill-primary/20" : ""}`} />
+                      {isFinal ? "Final" : "Add"}
+                    </button>
                   </td>
                   <td className="px-2 py-1.5 relative group">
                     <span className={getScoreBadgeClass(scores[ev.sessionCode] ?? 0)}>
