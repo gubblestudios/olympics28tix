@@ -180,6 +180,12 @@ export default function Index() {
             >
               <Star className="h-4 w-4" /> My Shortlist ({shortlistEvents.length})
             </button>
+            <button
+              onClick={() => setTab("planner")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "planner" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+            >
+              <CalendarDays className="h-4 w-4" /> Day Planner
+            </button>
             {tab === "shortlist" && (
               <button onClick={handleExport} className="ml-auto flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-accent text-accent-foreground hover:opacity-90 transition-opacity">
                 <Download className="h-3.5 w-3.5" /> Export CSV
