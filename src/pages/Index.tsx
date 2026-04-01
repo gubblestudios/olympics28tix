@@ -246,12 +246,6 @@ export default function Index() {
               finalList={finalList}
               onToggleFinal={handleToggleFinal}
               conflicts={conflicts}
-              filterSport={filterSport}
-              filterType={filterType}
-              filterNeighborhood={filterNeighborhood}
-              onFilterSport={setFilterSport}
-              onFilterType={setFilterType}
-              onFilterNeighborhood={setFilterNeighborhood}
             />
           )}
         </main>
