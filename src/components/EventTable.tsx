@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { OlympicEvent, Weights } from "@/lib/types";
 import { getScoreBadgeClass, computeScoreWithBreakdown } from "@/lib/scoring";
 import { StarRating } from "./StarRating";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, CheckCircle2 } from "lucide-react";
 
 function formatDate(dateParsed: string): string {
   const d = new Date(dateParsed + "T00:00:00");
