@@ -94,13 +94,14 @@ export default function Index() {
     });
   }, []);
 
-  const handleExport = () => {
-    const csv = exportCSV(shortlistEvents, scores);
+  const handleExport = (list: "shortlist" | "final") => {
+    const eventsToExport = list === "final" ? finalListEvents : shortlistEvents;
+    const csv = exportCSV(eventsToExport, scores);
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "la28_shortlist.csv";
+    a.download = list === "final" ? "la28_final_list.csv" : "la28_shortlist.csv";
     a.click();
     URL.revokeObjectURL(url);
   };
