@@ -24,7 +24,7 @@ export default function Index() {
   const [weights, setWeights] = useState<Weights>(() => loadFromLS("la28_weights", DEFAULT_WEIGHTS));
   const [sportInterests, setSportInterests] = useState<Record<string, number>>(() => loadFromLS("la28_interests", {}));
   const [shortlisted, setShortlisted] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_shortlist", [])));
-  const [threshold, setThreshold] = useState(() => loadFromLS("la28_threshold", 50));
+  
   const [tab, setTab] = useState<"all" | "shortlist" | "planner">("all");
   const [filterSport, setFilterSport] = useState("");
   const [filterType, setFilterType] = useState("");
@@ -41,7 +41,7 @@ export default function Index() {
   useEffect(() => { localStorage.setItem("la28_weights", JSON.stringify(weights)); }, [weights]);
   useEffect(() => { localStorage.setItem("la28_interests", JSON.stringify(sportInterests)); }, [sportInterests]);
   useEffect(() => { localStorage.setItem("la28_shortlist", JSON.stringify([...shortlisted])); }, [shortlisted]);
-  useEffect(() => { localStorage.setItem("la28_threshold", JSON.stringify(threshold)); }, [threshold]);
+  
 
   const scores = useMemo(() => {
     const map: Record<string, number> = {};
@@ -50,12 +50,7 @@ export default function Index() {
   }, [events, weights, sportInterests]);
 
   const conflicts = useMemo(() => detectConflicts(events, shortlisted), [events, shortlisted]);
-  const shortlistCodes = useMemo(() => {
-    const codes = new Set(shortlisted);
-    events.forEach((e) => { if ((scores[e.sessionCode] ?? 0) >= threshold) codes.add(e.sessionCode); });
-    return codes;
-  }, [events, shortlisted, scores, threshold]);
-  const travelWarnings = useMemo(() => detectTravelIssues(events, shortlistCodes), [events, shortlistCodes]);
+  const travelWarnings = useMemo(() => detectTravelIssues(events, shortlisted), [events, shortlisted]);
 
   const shortlistEvents = useMemo(() => {
     return events.filter((e) => shortlisted.has(e.sessionCode));
@@ -160,7 +155,7 @@ export default function Index() {
       <div className="flex">
         {sidebarOpen && (
           <aside className="w-72 min-w-[280px] p-4 border-r bg-muted/30 shrink-0 overflow-y-auto max-h-[calc(100vh-64px)] sticky top-[64px]">
-            <ScoringPanel weights={weights} onChange={setWeights} threshold={threshold} onThresholdChange={setThreshold} />
+            <ScoringPanel weights={weights} onChange={setWeights} />
           </aside>
         )}
 
