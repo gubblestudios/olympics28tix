@@ -155,7 +155,7 @@ export default function Index() {
       <div className="flex">
         {sidebarOpen && (
           <aside className="w-72 min-w-[280px] p-4 border-r bg-muted/30 shrink-0 overflow-y-auto max-h-[calc(100vh-64px)] sticky top-[64px]">
-            <ScoringPanel weights={weights} onChange={setWeights} threshold={threshold} onThresholdChange={setThreshold} />
+            <ScoringPanel weights={weights} onChange={setWeights} />
           </aside>
         )}
 

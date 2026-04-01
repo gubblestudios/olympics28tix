@@ -41,21 +41,6 @@ export function ScoringPanel({ weights, onChange }: Props) {
         </div>
       ))}
 
-      <div className="border-t border-primary-foreground/20 pt-4 mt-4 space-y-1.5">
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-medium">Shortlist Threshold</span>
-          <span className="text-xs font-bold text-accent">{threshold}</span>
-        </div>
-        <p className="text-xs text-primary-foreground/60">Minimum score for shortlist</p>
-        <Slider
-          min={0}
-          max={100}
-          step={5}
-          value={[threshold]}
-          onValueChange={([v]) => onThresholdChange(v)}
-          className="[&_[role=slider]]:bg-accent [&_[role=slider]]:border-accent [&_.relative>div:first-child>div]:bg-accent/40 [&_.relative>div:first-child>div>div]:bg-accent"
-        />
-      </div>
     </div>
   );
 }
