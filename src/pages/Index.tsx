@@ -25,8 +25,9 @@ export default function Index() {
   const [weights, setWeights] = useState<Weights>(() => loadFromLS("la28_weights", DEFAULT_WEIGHTS));
   const [sportInterests, setSportInterests] = useState<Record<string, number>>(() => loadFromLS("la28_interests", {}));
   const [shortlisted, setShortlisted] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_shortlist", [])));
+  const [finalList, setFinalList] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_final", [])));
   
-  const [tab, setTab] = useState<"all" | "shortlist" | "planner">("all");
+  const [tab, setTab] = useState<"all" | "shortlist" | "planner" | "final">("all");
   const [filterSport, setFilterSport] = useState("");
   const [filterType, setFilterType] = useState("");
   const [filterNeighborhood, setFilterNeighborhood] = useState("");

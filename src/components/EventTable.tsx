@@ -36,6 +36,8 @@ interface Props {
   onInterestChange: (sport: string, val: number) => void;
   shortlisted: Set<string>;
   onToggleShortlist: (code: string) => void;
+  finalList: Set<string>;
+  onToggleFinal: (code: string) => void;
   conflicts: Set<string>;
   filterSport: string;
   filterType: string;

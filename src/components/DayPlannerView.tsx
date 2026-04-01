@@ -10,6 +10,8 @@ interface DayPlannerViewProps {
   travelWarnings: TravelWarning[];
   shortlisted: Set<string>;
   onToggleShortlist: (code: string) => void;
+  finalList: Set<string>;
+  onToggleFinal: (code: string) => void;
 }
 
 function timeToMinutes(t: string): number {
