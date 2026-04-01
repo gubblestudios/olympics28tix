@@ -1,4 +1,4 @@
-import { OlympicEvent, Weights, NEIGHBORHOOD_RANKS } from "./types";
+import { OlympicEvent, Weights, NEIGHBORHOOD_RANKS, getTravelTime, TravelWarning } from "./types";
 
 function timeToMinutes(t: string): number {
   const [h, m] = t.split(":").map(Number);
