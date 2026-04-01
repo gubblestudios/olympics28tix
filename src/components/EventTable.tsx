@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { OlympicEvent, Weights } from "@/lib/types";
 import { getScoreBadgeClass, computeScoreWithBreakdown } from "@/lib/scoring";
 import { StarRating } from "./StarRating";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, CheckCircle2 } from "lucide-react";
 
 function formatDate(dateParsed: string): string {
   const d = new Date(dateParsed + "T00:00:00");
@@ -36,6 +36,8 @@ interface Props {
   onInterestChange: (sport: string, val: number) => void;
   shortlisted: Set<string>;
   onToggleShortlist: (code: string) => void;
+  finalList: Set<string>;
+  onToggleFinal: (code: string) => void;
   conflicts: Set<string>;
   filterSport: string;
   filterType: string;
@@ -73,7 +75,7 @@ function ScoreTooltip({ event, weights, sportInterests }: { event: OlympicEvent;
 
 export function EventTable({
   events, scores, weights, sportInterests, onInterestChange,
-  shortlisted, onToggleShortlist, conflicts,
+  shortlisted, onToggleShortlist, finalList, onToggleFinal, conflicts,
   filterSport, filterType, filterNeighborhood,
   onFilterSport, onFilterType, onFilterNeighborhood,
 }: Props) {
@@ -158,10 +160,11 @@ export function EventTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg border bg-card">
-        <table className="text-sm" style={{ minWidth: 1150, tableLayout: "fixed", width: 1150 }}>
+        <table className="text-sm" style={{ minWidth: 1220, tableLayout: "fixed", width: 1220 }}>
           <thead>
             <tr className="olympic-header">
               <th className="px-2 py-2 text-left" style={{ width: 36 }}>★</th>
+              <th className="px-2 py-2 text-center" style={{ width: 70 }}>Final</th>
               <th className="px-2 py-2 text-left" style={{ width: 55 }}><SortBtn k="score">Score</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 150 }}><SortBtn k="sport">Sport</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 100 }}>Interest</th>
@@ -178,6 +181,7 @@ export function EventTable({
           <tbody>
             {sorted.map((ev) => {
               const isShort = shortlisted.has(ev.sessionCode);
+              const isFinal = finalList.has(ev.sessionCode);
               const isConflict = conflicts.has(ev.sessionCode);
               return (
                 <tr
@@ -189,6 +193,20 @@ export function EventTable({
                     <span className={`text-lg ${isShort ? "text-accent" : "text-muted-foreground/30"}`}>
                       {isShort ? "★" : "☆"}
                     </span>
+                  </td>
+                  <td className="px-2 py-1.5 text-center" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      onClick={() => onToggleFinal(ev.sessionCode)}
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium transition-colors ${
+                        isFinal
+                          ? "bg-primary/15 text-primary"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80"
+                      }`}
+                      title={isFinal ? "Remove from Final List" : "Add to Final List"}
+                    >
+                      <CheckCircle2 className={`h-3 w-3 ${isFinal ? "fill-primary/20" : ""}`} />
+                      {isFinal ? "Final" : "Add"}
+                    </button>
                   </td>
                   <td className="px-2 py-1.5 relative group">
                     <span className={getScoreBadgeClass(scores[ev.sessionCode] ?? 0)}>

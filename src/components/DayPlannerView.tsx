@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { OlympicEvent, SPORT_ICONS, TravelWarning, getTravelTime } from "@/lib/types";
 import { getScoreBadgeClass } from "@/lib/scoring";
-import { ChevronDown, ChevronRight, Star, AlertTriangle, Car, Clock, MapPin } from "lucide-react";
+import { ChevronDown, ChevronRight, Star, AlertTriangle, Car, Clock, MapPin, CheckCircle2 } from "lucide-react";
 
 interface DayPlannerViewProps {
   events: OlympicEvent[];
@@ -10,6 +10,8 @@ interface DayPlannerViewProps {
   travelWarnings: TravelWarning[];
   shortlisted: Set<string>;
   onToggleShortlist: (code: string) => void;
+  finalList: Set<string>;
+  onToggleFinal: (code: string) => void;
 }
 
 function timeToMinutes(t: string): number {
@@ -32,6 +34,8 @@ export function DayPlannerView({
   travelWarnings,
   shortlisted,
   onToggleShortlist,
+  finalList,
+  onToggleFinal,
 }: DayPlannerViewProps) {
   const [expandedDays, setExpandedDays] = useState<Set<string>>(new Set());
   const [showOnlyStarred, setShowOnlyStarred] = useState(false);
@@ -159,6 +163,7 @@ export function DayPlannerView({
                   const badgeClass = getScoreBadgeClass(score);
                   const isConflict = conflicts.has(event.sessionCode);
                   const isStarred = shortlisted.has(event.sessionCode);
+                  const isFinal = finalList.has(event.sessionCode);
                   const icon = SPORT_ICONS[event.sport] ?? "🏟️";
 
                   // Check for warnings between this event and the next
@@ -239,6 +244,18 @@ export function DayPlannerView({
                             >
                               {score}
                             </span>
+                            <button
+                              onClick={() => onToggleFinal(event.sessionCode)}
+                              className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${
+                                isFinal
+                                  ? "bg-primary/15 text-primary"
+                                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                              }`}
+                              title={isFinal ? "Remove from Final List" : "Add to Final List"}
+                            >
+                              <CheckCircle2 className={`h-3 w-3 ${isFinal ? "fill-primary/20" : ""}`} />
+                              {isFinal ? "Final" : "Add to Final"}
+                            </button>
                             <button
                               onClick={() => onToggleShortlist(event.sessionCode)}
                               className="p-1.5 rounded hover:bg-muted transition-colors"

@@ -8,7 +8,7 @@ import { EventTable } from "@/components/EventTable";
 import { SportInterestCards } from "@/components/SportInterestCards";
 import { PreferencesCards } from "@/components/PreferencesCards";
 import { DayPlannerView } from "@/components/DayPlannerView";
-import { Download, List, Star, Settings, CalendarDays } from "lucide-react";
+import { Download, List, Star, Settings, CalendarDays, CheckCircle2 } from "lucide-react";
 import la28Logo from "@/assets/la28-logo.png";
 
 function loadFromLS<T>(key: string, fallback: T): T {
@@ -25,8 +25,9 @@ export default function Index() {
   const [weights, setWeights] = useState<Weights>(() => loadFromLS("la28_weights", DEFAULT_WEIGHTS));
   const [sportInterests, setSportInterests] = useState<Record<string, number>>(() => loadFromLS("la28_interests", {}));
   const [shortlisted, setShortlisted] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_shortlist", [])));
+  const [finalList, setFinalList] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_final", [])));
   
-  const [tab, setTab] = useState<"all" | "shortlist" | "planner">("all");
+  const [tab, setTab] = useState<"all" | "shortlist" | "planner" | "final">("all");
   const [filterSport, setFilterSport] = useState("");
   const [filterType, setFilterType] = useState("");
   const [filterNeighborhood, setFilterNeighborhood] = useState("");
@@ -42,6 +43,7 @@ export default function Index() {
   useEffect(() => { localStorage.setItem("la28_weights", JSON.stringify(weights)); }, [weights]);
   useEffect(() => { localStorage.setItem("la28_interests", JSON.stringify(sportInterests)); }, [sportInterests]);
   useEffect(() => { localStorage.setItem("la28_shortlist", JSON.stringify([...shortlisted])); }, [shortlisted]);
+  useEffect(() => { localStorage.setItem("la28_final", JSON.stringify([...finalList])); }, [finalList]);
   
 
   const scores = useMemo(() => {
@@ -56,6 +58,10 @@ export default function Index() {
   const shortlistEvents = useMemo(() => {
     return events.filter((e) => shortlisted.has(e.sessionCode));
   }, [events, shortlisted]);
+
+  const finalListEvents = useMemo(() => {
+    return events.filter((e) => finalList.has(e.sessionCode));
+  }, [events, finalList]);
 
   const excludedSports = useMemo(() => {
     const set = new Set<string>();
@@ -73,6 +79,15 @@ export default function Index() {
 
   const handleToggleShortlist = useCallback((code: string) => {
     setShortlisted((prev) => {
+      const next = new Set(prev);
+      if (next.has(code)) next.delete(code);
+      else next.add(code);
+      return next;
+    });
+  }, []);
+
+  const handleToggleFinal = useCallback((code: string) => {
+    setFinalList((prev) => {
       const next = new Set(prev);
       if (next.has(code)) next.delete(code);
       else next.add(code);
@@ -196,7 +211,13 @@ export default function Index() {
             >
               <CalendarDays className="h-4 w-4" /> Day Planner
             </button>
-            {tab === "shortlist" && (
+            <button
+              onClick={() => setTab("final")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "final" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+            >
+              <CheckCircle2 className="h-4 w-4" /> Final List ({finalListEvents.length})
+            </button>
+            {(tab === "shortlist" || tab === "final") && (
               <button onClick={handleExport} className="ml-auto flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-accent text-accent-foreground hover:opacity-90 transition-opacity">
                 <Download className="h-3.5 w-3.5" /> Export CSV
               </button>
@@ -211,16 +232,20 @@ export default function Index() {
               travelWarnings={travelWarnings}
               shortlisted={shortlisted}
               onToggleShortlist={handleToggleShortlist}
+              finalList={finalList}
+              onToggleFinal={handleToggleFinal}
             />
           ) : (
             <EventTable
-              events={displayEvents}
+              events={tab === "final" ? finalListEvents : displayEvents}
               scores={scores}
               weights={weights}
               sportInterests={sportInterests}
               onInterestChange={handleInterest}
               shortlisted={shortlisted}
               onToggleShortlist={handleToggleShortlist}
+              finalList={finalList}
+              onToggleFinal={handleToggleFinal}
               conflicts={conflicts}
               filterSport={filterSport}
               filterType={filterType}
