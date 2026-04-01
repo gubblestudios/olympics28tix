@@ -8,7 +8,7 @@ import { EventTable } from "@/components/EventTable";
 import { SportInterestCards } from "@/components/SportInterestCards";
 import { PreferencesCards } from "@/components/PreferencesCards";
 import { DayPlannerView } from "@/components/DayPlannerView";
-import { Download, List, Star, Settings, CalendarDays } from "lucide-react";
+import { Download, List, Star, Settings, CalendarDays, CheckCircle2 } from "lucide-react";
 import la28Logo from "@/assets/la28-logo.png";
 
 function loadFromLS<T>(key: string, fallback: T): T {
