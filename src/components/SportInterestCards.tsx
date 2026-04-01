@@ -105,7 +105,11 @@ export function SportInterestCards({ events, sportInterests: initial, onComplete
 
       <div className="flex justify-center pt-4">
         <button
-          onClick={() => onComplete(interests)}
+          onClick={() => {
+            const merged = { ...interests };
+            excluded.forEach((s) => { merged[s] = -1; });
+            onComplete(merged);
+          }}
           className={`px-8 py-3 rounded-lg font-semibold text-sm transition-all ${allRated ? "bg-accent text-accent-foreground hover:opacity-90" : "bg-primary text-primary-foreground hover:opacity-90"}`}
         >
           {allRated ? "Next →" : "Skip unrated & continue →"}
