@@ -11,6 +11,24 @@ interface Props {
 
 export function SportInterestCards({ events, sportInterests: initial, onComplete }: Props) {
   const [interests, setInterests] = useState<Record<string, number>>(initial);
+  const [excluded, setExcluded] = useState<Set<string>>(() => {
+    // Sports with interest === -1 are excluded
+    const ex = new Set<string>();
+    Object.entries(initial).forEach(([k, v]) => { if (v === -1) ex.add(k); });
+    return ex;
+  });
+
+  const toggleExclude = (sport: string) => {
+    setExcluded((prev) => {
+      const next = new Set(prev);
+      if (next.has(sport)) {
+        next.delete(sport);
+      } else {
+        next.add(sport);
+      }
+      return next;
+    });
+  };
 
   const sports = useMemo(() => {
     const map = new Map<string, { count: number; medals: number; venues: string[] }>();
