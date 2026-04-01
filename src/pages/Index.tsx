@@ -58,8 +58,8 @@ export default function Index() {
   const travelWarnings = useMemo(() => detectTravelIssues(events, shortlistCodes), [events, shortlistCodes]);
 
   const shortlistEvents = useMemo(() => {
-    return events.filter((e) => shortlisted.has(e.sessionCode) || (scores[e.sessionCode] ?? 0) >= threshold);
-  }, [events, shortlisted, scores, threshold]);
+    return events.filter((e) => shortlisted.has(e.sessionCode));
+  }, [events, shortlisted]);
 
   const displayEvents = tab === "shortlist" ? shortlistEvents : events;
 
@@ -206,6 +206,7 @@ export default function Index() {
             <EventTable
               events={displayEvents}
               scores={scores}
+              weights={weights}
               sportInterests={sportInterests}
               onInterestChange={handleInterest}
               shortlisted={shortlisted}

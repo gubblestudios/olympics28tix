@@ -14,22 +14,41 @@ export function getTimeScore(startTime: string): number {
 }
 
 export function computeScore(event: OlympicEvent, weights: Weights, sportInterests: Record<string, number>): number {
-  const interest = (sportInterests[event.sport] ?? 0) / 5; // 0-1
+  const { breakdown } = computeScoreWithBreakdown(event, weights, sportInterests);
+  const maxPossible = weights.interest + weights.medal + weights.indoor + weights.neighborhood + weights.evening;
+  if (maxPossible === 0) return 0;
+  const raw = breakdown.interest.weighted + breakdown.medal.weighted + breakdown.indoor.weighted + breakdown.neighborhood.weighted + breakdown.evening.weighted;
+  return Math.round((raw / maxPossible) * 100);
+}
+
+export interface ScoreBreakdown {
+  interest: { raw: number; weighted: number };
+  medal: { raw: number; weighted: number };
+  indoor: { raw: number; weighted: number };
+  neighborhood: { raw: number; weighted: number };
+  evening: { raw: number; weighted: number };
+}
+
+export function computeScoreWithBreakdown(event: OlympicEvent, weights: Weights, sportInterests: Record<string, number>): { score: number; breakdown: ScoreBreakdown } {
+  const interest = (sportInterests[event.sport] ?? 0) / 5;
   const medal = event.isMedalEvent ? 1 : 0;
   const indoor = event.indoorOutdoor === "indoor" ? 1 : 0;
   const hood = (NEIGHBORHOOD_RANKS[event.neighborhood] ?? 3) / 5;
   const evening = getTimeScore(event.startTime);
 
-  const raw =
-    interest * weights.interest +
-    medal * weights.medal +
-    indoor * weights.indoor +
-    hood * weights.neighborhood +
-    evening * weights.evening;
+  const breakdown: ScoreBreakdown = {
+    interest: { raw: interest, weighted: interest * weights.interest },
+    medal: { raw: medal, weighted: medal * weights.medal },
+    indoor: { raw: indoor, weighted: indoor * weights.indoor },
+    neighborhood: { raw: hood, weighted: hood * weights.neighborhood },
+    evening: { raw: evening, weighted: evening * weights.evening },
+  };
 
   const maxPossible = weights.interest + weights.medal + weights.indoor + weights.neighborhood + weights.evening;
-  if (maxPossible === 0) return 0;
-  return Math.round((raw / maxPossible) * 100);
+  const raw = breakdown.interest.weighted + breakdown.medal.weighted + breakdown.indoor.weighted + breakdown.neighborhood.weighted + breakdown.evening.weighted;
+  const score = maxPossible === 0 ? 0 : Math.round((raw / maxPossible) * 100);
+
+  return { score, breakdown };
 }
 
 export function getScoreBadgeClass(score: number): string {
