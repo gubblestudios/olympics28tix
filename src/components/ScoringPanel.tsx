@@ -15,7 +15,7 @@ const LABELS: { key: keyof Weights; label: string; desc: string }[] = [
   { key: "evening", label: "Evening Sessions", desc: "I prefer evening over morning" },
 ];
 
-export function ScoringPanel({ weights, onChange, threshold, onThresholdChange }: Props) {
+export function ScoringPanel({ weights, onChange }: Props) {
   return (
     <div className="bg-primary text-primary-foreground rounded-lg p-5 space-y-5">
       <div className="flex items-center gap-2 mb-2">
