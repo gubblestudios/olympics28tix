@@ -23,6 +23,30 @@ interface Props {
 
 type SortKey = "score" | "date" | "sport" | "startTime" | "neighborhood";
 
+function ScoreTooltip({ event, weights, sportInterests }: { event: OlympicEvent; weights: Weights; sportInterests: Record<string, number> }) {
+  const { score, breakdown } = computeScoreWithBreakdown(event, weights, sportInterests);
+  const lines = [
+    { label: "Sport Interest", pct: Math.round(breakdown.interest.raw * 100) },
+    { label: "Medal Event", pct: Math.round(breakdown.medal.raw * 100) },
+    { label: "Indoor", pct: Math.round(breakdown.indoor.raw * 100) },
+    { label: "Neighborhood", pct: Math.round(breakdown.neighborhood.raw * 100) },
+    { label: "Time of Day", pct: Math.round(breakdown.evening.raw * 100) },
+  ];
+  return (
+    <div className="absolute bottom-full left-0 mb-1 hidden group-hover:block z-50 bg-popover text-popover-foreground border rounded-lg shadow-lg p-3 w-52 text-xs">
+      <div className="font-semibold mb-1.5">Score: {score}/100</div>
+      {lines.map((l) => (
+        <div key={l.label} className="flex justify-between py-0.5">
+          <span>{l.label}</span>
+          <span className={l.pct >= 60 ? "text-[hsl(var(--score-high))]" : l.pct >= 30 ? "text-[hsl(var(--score-mid))]" : "text-[hsl(var(--score-low))]"}>
+            {l.pct}%
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function EventTable({
   events, scores, weights, sportInterests, onInterestChange,
   shortlisted, onToggleShortlist, conflicts,
