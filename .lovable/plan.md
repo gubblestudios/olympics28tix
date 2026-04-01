@@ -1,22 +1,27 @@
 
 
-## Simplify: Remove Threshold-Based Auto-Shortlisting
+## Add Legend for Row Highlights
 
 ### Problem
-There are two overlapping concepts:
-1. **Starred events** (`shortlisted` Set) — manually picked by user
-2. **`shortlistCodes`** — stars + any event above score threshold — used for conflict/travel detection
-
-This is confusing. The threshold slider doesn't clearly do anything visible, and conflicts show for events the user never picked.
+The table has colored row highlights (yellow/gold for starred events, red for conflicts) but no explanation of what they mean.
 
 ### Solution
-- **Remove the threshold concept entirely.** Shortlist = starred events only.
-- Remove the `threshold` state, localStorage persistence, and the threshold slider from `ScoringPanel`
-- Remove `shortlistCodes` — just use `shortlisted` everywhere (conflicts, travel warnings, Day Planner)
-- The scoring weights panel remains for adjusting how events are scored/ranked
+Add a compact inline legend below the filter bar in `EventTable.tsx` showing:
+- **Gold/accent background** = Starred (shortlisted) event
+- **Red left border** = Time conflict with another starred event
 
-### Files to Change
-1. **`src/pages/Index.tsx`** — Remove `threshold` state/localStorage, remove `shortlistCodes`, pass `shortlisted` to `detectTravelIssues` instead
-2. **`src/components/ScoringPanel.tsx`** — Remove threshold slider props and UI
-3. **`src/lib/types.ts`** — Remove `DEFAULT_WEIGHTS` threshold if present
+### Changes
+**`src/components/EventTable.tsx`** — Add a small legend row between the filters and the table:
+```
+<div className="flex gap-4 text-xs text-muted-foreground">
+  <span className="flex items-center gap-1.5">
+    <span className="w-4 h-3 rounded bg-accent/20 border border-accent/40" /> Starred
+  </span>
+  <span className="flex items-center gap-1.5">
+    <span className="w-4 h-3 rounded bg-destructive/10 border-l-4 border-destructive" /> Time Conflict
+  </span>
+</div>
+```
+
+This sits next to the session count, keeping the UI compact.
 
