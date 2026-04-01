@@ -76,9 +76,3 @@ export const DEFAULT_WEIGHTS: Weights = {
   neighborhood: 5,
   evening: 5,
 };
-  interest: 5,
-  medal: 5,
-  indoor: 5,
-  neighborhood: 5,
-  evening: 5,
-};
