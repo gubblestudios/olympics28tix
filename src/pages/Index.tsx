@@ -43,6 +43,7 @@ export default function Index() {
   useEffect(() => { localStorage.setItem("la28_weights", JSON.stringify(weights)); }, [weights]);
   useEffect(() => { localStorage.setItem("la28_interests", JSON.stringify(sportInterests)); }, [sportInterests]);
   useEffect(() => { localStorage.setItem("la28_shortlist", JSON.stringify([...shortlisted])); }, [shortlisted]);
+  useEffect(() => { localStorage.setItem("la28_final", JSON.stringify([...finalList])); }, [finalList]);
   
 
   const scores = useMemo(() => {
