@@ -145,22 +145,22 @@ export default function Index() {
     <div className="min-h-screen bg-background">
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src={la28Logo} alt="LA 2028" className="h-9" />
+          <img src={la28Logo} alt="LA 2028" className="h-14" />
           <div>
             <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
-            <p className="text-xs text-primary-foreground/70">Diana's Olympic Session Picker</p>
+            <p className="text-xs text-muted-foreground">Diana's Olympic Session Picker</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setStep("sports")}
-            className="text-xs text-primary-foreground/80 hover:text-accent transition-colors border border-primary-foreground/20 rounded px-3 py-1.5 flex items-center gap-1.5"
+            className="text-xs text-muted-foreground hover:text-accent transition-colors border border-border rounded px-3 py-1.5 flex items-center gap-1.5"
           >
             <Settings className="h-3.5 w-3.5" /> Edit Preferences
           </button>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="text-xs text-primary-foreground/80 hover:text-accent transition-colors border border-primary-foreground/20 rounded px-3 py-1.5"
+            className="text-xs text-muted-foreground hover:text-accent transition-colors border border-border rounded px-3 py-1.5"
           >
             {sidebarOpen ? "Hide Weights" : "Show Weights"}
           </button>
