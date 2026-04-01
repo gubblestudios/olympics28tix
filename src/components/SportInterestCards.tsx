@@ -42,7 +42,7 @@ export function SportInterestCards({ events, sportInterests: initial, onComplete
     return [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
   }, [events]);
 
-  const allRated = sports.every(([s]) => (interests[s] ?? 0) > 0);
+  const allRated = sports.every(([s]) => excluded.has(s) || (interests[s] ?? 0) > 0);
 
   return (
     <div className="space-y-8">
