@@ -211,7 +211,13 @@ export default function Index() {
             >
               <CalendarDays className="h-4 w-4" /> Day Planner
             </button>
-            {tab === "shortlist" && (
+            <button
+              onClick={() => setTab("final")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "final" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+            >
+              <CheckCircle2 className="h-4 w-4" /> Final List ({finalListEvents.length})
+            </button>
+            {(tab === "shortlist" || tab === "final") && (
               <button onClick={handleExport} className="ml-auto flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-accent text-accent-foreground hover:opacity-90 transition-opacity">
                 <Download className="h-3.5 w-3.5" /> Export CSV
               </button>
@@ -226,16 +232,20 @@ export default function Index() {
               travelWarnings={travelWarnings}
               shortlisted={shortlisted}
               onToggleShortlist={handleToggleShortlist}
+              finalList={finalList}
+              onToggleFinal={handleToggleFinal}
             />
           ) : (
             <EventTable
-              events={displayEvents}
+              events={tab === "final" ? finalListEvents : displayEvents}
               scores={scores}
               weights={weights}
               sportInterests={sportInterests}
               onInterestChange={handleInterest}
               shortlisted={shortlisted}
               onToggleShortlist={handleToggleShortlist}
+              finalList={finalList}
+              onToggleFinal={handleToggleFinal}
               conflicts={conflicts}
               filterSport={filterSport}
               filterType={filterType}
