@@ -85,6 +85,20 @@ export function DayPlannerView({
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setShowOnlyStarred(false)}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${!showOnlyStarred ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+        >
+          All Shortlisted
+        </button>
+        <button
+          onClick={() => setShowOnlyStarred(true)}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${showOnlyStarred ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+        >
+          <Star className="h-3 w-3" /> Starred Only ({events.filter(e => shortlisted.has(e.sessionCode)).length})
+        </button>
+      </div>
       {dayGroups.map(({ date, events: dayEvents }) => {
         const isOpen = expandedDays.has(date);
         const dayConflicts = dayEvents.filter((e) => conflicts.has(e.sessionCode)).length;
