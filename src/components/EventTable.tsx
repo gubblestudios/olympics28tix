@@ -172,8 +172,8 @@ export function EventTable({
                   <td className="p-2">
                     <StarRating value={sportInterests[ev.sport] ?? 0} onChange={(v) => onInterestChange(ev.sport, v)} />
                   </td>
-                  <td className="p-2 whitespace-nowrap text-xs">{ev.dateParsed}</td>
-                  <td className="p-2 whitespace-nowrap text-xs">{ev.startTime}–{ev.endTime}</td>
+                  <td className="p-2 whitespace-nowrap text-xs">{formatDate(ev.dateParsed)}</td>
+                  <td className="p-2 whitespace-nowrap text-xs">{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
                   <td className="p-2 text-xs">{ev.sessionType}</td>
                   <td className="p-2 text-xs max-w-[250px] truncate" title={ev.sessionDescription}>{ev.sessionDescription}</td>
                   <td className="p-2 text-xs whitespace-nowrap">{ev.venue}</td>
