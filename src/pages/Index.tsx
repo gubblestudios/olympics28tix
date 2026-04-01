@@ -193,21 +193,32 @@ export default function Index() {
             )}
           </div>
 
-          <EventTable
-            events={displayEvents}
-            scores={scores}
-            sportInterests={sportInterests}
-            onInterestChange={handleInterest}
-            shortlisted={shortlisted}
-            onToggleShortlist={handleToggleShortlist}
-            conflicts={conflicts}
-            filterSport={filterSport}
-            filterType={filterType}
-            filterNeighborhood={filterNeighborhood}
-            onFilterSport={setFilterSport}
-            onFilterType={setFilterType}
-            onFilterNeighborhood={setFilterNeighborhood}
-          />
+          {tab === "planner" ? (
+            <DayPlannerView
+              events={shortlistEvents}
+              scores={scores}
+              conflicts={conflicts}
+              travelWarnings={travelWarnings}
+              shortlisted={shortlisted}
+              onToggleShortlist={handleToggleShortlist}
+            />
+          ) : (
+            <EventTable
+              events={displayEvents}
+              scores={scores}
+              sportInterests={sportInterests}
+              onInterestChange={handleInterest}
+              shortlisted={shortlisted}
+              onToggleShortlist={handleToggleShortlist}
+              conflicts={conflicts}
+              filterSport={filterSport}
+              filterType={filterType}
+              filterNeighborhood={filterNeighborhood}
+              onFilterSport={setFilterSport}
+              onFilterType={setFilterType}
+              onFilterNeighborhood={setFilterNeighborhood}
+            />
+          )}
         </main>
       </div>
     </div>
