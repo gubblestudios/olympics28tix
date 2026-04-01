@@ -59,6 +59,10 @@ export default function Index() {
     return events.filter((e) => shortlisted.has(e.sessionCode));
   }, [events, shortlisted]);
 
+  const finalListEvents = useMemo(() => {
+    return events.filter((e) => finalList.has(e.sessionCode));
+  }, [events, finalList]);
+
   const excludedSports = useMemo(() => {
     const set = new Set<string>();
     Object.entries(sportInterests).forEach(([k, v]) => { if (v === -1) set.add(k); });
