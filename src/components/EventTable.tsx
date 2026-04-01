@@ -4,6 +4,19 @@ import { getScoreBadgeClass, computeScoreWithBreakdown } from "@/lib/scoring";
 import { StarRating } from "./StarRating";
 import { ArrowUpDown, ChevronDown } from "lucide-react";
 
+function formatDate(dateParsed: string): string {
+  const d = new Date(dateParsed + "T00:00:00");
+  return d.toLocaleDateString("en-US", { weekday: "short", month: "long", day: "numeric" });
+}
+
+function formatTime(t: string): string {
+  if (!t || t === "TBD") return "TBD";
+  const [h, m] = t.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 || 12;
+  return `${h12}:${m.toString().padStart(2, "0")} ${ampm}`;
+}
+
 interface Props {
   events: OlympicEvent[];
   scores: Record<string, number>;
