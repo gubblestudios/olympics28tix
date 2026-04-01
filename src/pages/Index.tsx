@@ -137,9 +137,9 @@ export default function Index() {
     <div className="min-h-screen bg-background">
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">🏅</span>
+          <img src={la28Logo} alt="LA 2028" className="h-9" />
           <div>
-            <h1 className="text-xl font-bold tracking-tight">LA 2028 Ticket Planner</h1>
+            <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
             <p className="text-xs text-primary-foreground/70">Diana's Olympic Session Picker</p>
           </div>
         </div>
