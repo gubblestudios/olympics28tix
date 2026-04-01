@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { OlympicEvent, Weights } from "@/lib/types";
 import { getScoreBadgeClass, computeScoreWithBreakdown } from "@/lib/scoring";
 import { StarRating } from "./StarRating";
+import { MultiSelectFilter } from "./MultiSelectFilter";
 import { ArrowUpDown, CheckCircle2 } from "lucide-react";
 
 function formatDate(dateParsed: string): string {
@@ -39,12 +40,6 @@ interface Props {
   finalList: Set<string>;
   onToggleFinal: (code: string) => void;
   conflicts: Set<string>;
-  filterSport: string;
-  filterType: string;
-  filterNeighborhood: string;
-  onFilterSport: (s: string) => void;
-  onFilterType: (s: string) => void;
-  onFilterNeighborhood: (s: string) => void;
 }
 
 type SortKey = "score" | "date" | "sport" | "startTime" | "neighborhood";
@@ -76,27 +71,32 @@ function ScoreTooltip({ event, weights, sportInterests }: { event: OlympicEvent;
 export function EventTable({
   events, scores, weights, sportInterests, onInterestChange,
   shortlisted, onToggleShortlist, finalList, onToggleFinal, conflicts,
-  filterSport, filterType, filterNeighborhood,
-  onFilterSport, onFilterType, onFilterNeighborhood,
 }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>("score");
   const [sortAsc, setSortAsc] = useState(false);
-  const [filterDay, setFilterDay] = useState("");
+  const [filterSports, setFilterSports] = useState<Set<string>>(new Set());
+  const [filterTypes, setFilterTypes] = useState<Set<string>>(new Set());
+  const [filterHoods, setFilterHoods] = useState<Set<string>>(new Set());
+  const [filterDays, setFilterDays] = useState<Set<string>>(new Set());
 
   const sports = useMemo(() => [...new Set(events.map((e) => e.sport))].sort(), [events]);
   const types = useMemo(() => [...new Set(events.map((e) => e.sessionType))].sort(), [events]);
   const hoods = useMemo(() => [...new Set(events.map((e) => e.neighborhood))].sort(), [events]);
+  const dayOptions = ["Weekend", "Weekday"];
 
   const filtered = useMemo(() => {
     return events.filter((e) => {
-      if (filterSport && e.sport !== filterSport) return false;
-      if (filterType && e.sessionType !== filterType) return false;
-      if (filterNeighborhood && e.neighborhood !== filterNeighborhood) return false;
-      if (filterDay === "weekend" && !isWeekend(e.dateParsed)) return false;
-      if (filterDay === "weekday" && isWeekend(e.dateParsed)) return false;
+      if (filterSports.size > 0 && !filterSports.has(e.sport)) return false;
+      if (filterTypes.size > 0 && !filterTypes.has(e.sessionType)) return false;
+      if (filterHoods.size > 0 && !filterHoods.has(e.neighborhood)) return false;
+      if (filterDays.size > 0) {
+        const isWknd = isWeekend(e.dateParsed);
+        if (filterDays.has("Weekend") && !filterDays.has("Weekday") && !isWknd) return false;
+        if (filterDays.has("Weekday") && !filterDays.has("Weekend") && isWknd) return false;
+      }
       return true;
     });
-  }, [events, filterSport, filterType, filterNeighborhood, filterDay]);
+  }, [events, filterSports, filterTypes, filterHoods, filterDays]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
@@ -126,28 +126,15 @@ export function EventTable({
     </button>
   );
 
-  const selectClass = "text-xs bg-card border rounded px-2 py-1.5 text-foreground";
+  
 
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-2">
-        <select value={filterSport} onChange={(e) => onFilterSport(e.target.value)} className={selectClass}>
-          <option value="">All Sports</option>
-          {sports.map((s) => <option key={s} value={s}>{s}</option>)}
-        </select>
-        <select value={filterType} onChange={(e) => onFilterType(e.target.value)} className={selectClass}>
-          <option value="">All Types</option>
-          {types.map((t) => <option key={t} value={t}>{t}</option>)}
-        </select>
-        <select value={filterNeighborhood} onChange={(e) => onFilterNeighborhood(e.target.value)} className={selectClass}>
-          <option value="">All Neighborhoods</option>
-          {hoods.map((n) => <option key={n} value={n}>{n}</option>)}
-        </select>
-        <select value={filterDay} onChange={(e) => setFilterDay(e.target.value)} className={selectClass}>
-          <option value="">All Days</option>
-          <option value="weekend">Weekend</option>
-          <option value="weekday">Weekday</option>
-        </select>
+        <MultiSelectFilter label="All Sports" options={sports} selected={filterSports} onChange={setFilterSports} />
+        <MultiSelectFilter label="All Types" options={types} selected={filterTypes} onChange={setFilterTypes} />
+        <MultiSelectFilter label="All Areas" options={hoods} selected={filterHoods} onChange={setFilterHoods} />
+        <MultiSelectFilter label="All Days" options={dayOptions} selected={filterDays} onChange={setFilterDays} />
         <div className="flex gap-4 text-xs text-muted-foreground self-center ml-auto items-center">
           <span className="flex items-center gap-1.5">
             <span className="w-4 h-3 rounded bg-accent/20 border border-accent/40" /> Starred
