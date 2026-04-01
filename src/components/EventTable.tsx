@@ -147,22 +147,22 @@ export function EventTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg border bg-card">
-        <table className="text-sm" style={{ minWidth: 1220, tableLayout: "fixed", width: 1220 }}>
+        <table className="text-sm" style={{ minWidth: 1311, tableLayout: "fixed", width: 1311 }}>
           <thead>
             <tr className="olympic-header">
               <th className="px-2 py-2 text-left" style={{ width: 36 }}>★</th>
               <th className="px-2 py-2 text-center" style={{ width: 70 }}>Final</th>
-              <th className="px-2 py-2 text-left" style={{ width: 55 }}><SortBtn k="score">Score</SortBtn></th>
+              <th className="px-2 py-2 text-left" style={{ width: 70 }}><SortBtn k="score">Score</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 150 }}><SortBtn k="sport">Sport</SortBtn></th>
-              <th className="px-2 py-2 text-left" style={{ width: 100 }}>Interest</th>
-              <th className="px-2 py-2 text-left" style={{ width: 50 }}>Day</th>
+              <th className="px-2 py-2 text-left" style={{ width: 110 }}>Interest</th>
+              <th className="px-2 py-2 text-left" style={{ width: 60 }}>Day</th>
               <th className="px-2 py-2 text-left" style={{ width: 90 }}><SortBtn k="date">Date</SortBtn></th>
               <th className="px-2 py-2 text-left whitespace-nowrap" style={{ width: 140 }}><SortBtn k="startTime">Time</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 75 }}>Type</th>
-              <th className="px-2 py-2 text-left" style={{ width: 200, maxWidth: 200 }}>Description</th>
-              <th className="px-2 py-2 text-left" style={{ width: 120 }}>Venue</th>
+              <th className="px-2 py-2 text-left" style={{ width: 210, maxWidth: 210 }}>Description</th>
+              <th className="px-2 py-2 text-left" style={{ width: 140 }}>Venue</th>
               <th className="px-2 py-2 text-left" style={{ width: 100 }}><SortBtn k="neighborhood">Area</SortBtn></th>
-              <th className="px-2 py-2 text-center" style={{ width: 45 }}>Medal</th>
+              <th className="px-2 py-2 text-center" style={{ width: 60 }}>Medal</th>
             </tr>
           </thead>
           <tbody>
@@ -209,7 +209,7 @@ export function EventTable({
                   <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatDate(ev.dateParsed)}</td>
                   <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
                   <td className="px-2 py-1.5 text-xs">{ev.sessionType}</td>
-                  <td className="px-2 py-1.5 text-xs truncate" style={{ maxWidth: 200 }} title={ev.sessionDescription}>{ev.sessionDescription}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" style={{ maxWidth: 210 }} title={ev.sessionDescription}>{ev.sessionDescription}</td>
                   <td className="px-2 py-1.5 text-xs truncate" title={ev.venue}>{ev.venue}</td>
                   <td className="px-2 py-1.5 text-xs truncate" title={ev.neighborhood}>{ev.neighborhood}</td>
                   <td className="px-2 py-1.5 text-center">
