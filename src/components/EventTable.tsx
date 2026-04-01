@@ -159,8 +159,8 @@ export function EventTable({
               <th className="px-2 py-2 text-left" style={{ width: 90 }}><SortBtn k="date">Date</SortBtn></th>
               <th className="px-2 py-2 text-left whitespace-nowrap" style={{ width: 140 }}><SortBtn k="startTime">Time</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 75 }}>Type</th>
-              <th className="px-2 py-2 text-left" style={{ width: 210, maxWidth: 210 }}>Description</th>
-              <th className="px-2 py-2 text-left" style={{ width: 140 }}>Venue</th>
+              <th className="px-2 py-2 text-left" style={{ width: 280, maxWidth: 280 }}>Description</th>
+              <th className="px-2 py-2 text-left" style={{ width: 70 }}>Venue</th>
               <th className="px-2 py-2 text-left" style={{ width: 100 }}><SortBtn k="neighborhood">Area</SortBtn></th>
               <th className="px-2 py-2 text-center" style={{ width: 60 }}>Medal</th>
             </tr>
@@ -209,7 +209,7 @@ export function EventTable({
                   <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatDate(ev.dateParsed)}</td>
                   <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
                   <td className="px-2 py-1.5 text-xs">{ev.sessionType}</td>
-                  <td className="px-2 py-1.5 text-xs truncate" style={{ maxWidth: 210 }} title={ev.sessionDescription}>{ev.sessionDescription}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" style={{ maxWidth: 280 }} title={ev.sessionDescription}>{ev.sessionDescription}</td>
                   <td className="px-2 py-1.5 text-xs truncate" title={ev.venue}>{ev.venue}</td>
                   <td className="px-2 py-1.5 text-xs truncate" title={ev.neighborhood}>{ev.neighborhood}</td>
                   <td className="px-2 py-1.5 text-center">
