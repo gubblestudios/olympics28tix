@@ -7,7 +7,8 @@ import { ScoringPanel } from "@/components/ScoringPanel";
 import { EventTable } from "@/components/EventTable";
 import { SportInterestCards } from "@/components/SportInterestCards";
 import { PreferencesCards } from "@/components/PreferencesCards";
-import { Download, List, Star, Settings } from "lucide-react";
+import { DayPlannerView } from "@/components/DayPlannerView";
+import { Download, List, Star, Settings, CalendarDays } from "lucide-react";
 
 function loadFromLS<T>(key: string, fallback: T): T {
   try {
