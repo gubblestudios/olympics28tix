@@ -34,6 +34,8 @@ export function DayPlannerView({
   travelWarnings,
   shortlisted,
   onToggleShortlist,
+  finalList,
+  onToggleFinal,
 }: DayPlannerViewProps) {
   const [expandedDays, setExpandedDays] = useState<Set<string>>(new Set());
   const [showOnlyStarred, setShowOnlyStarred] = useState(false);
