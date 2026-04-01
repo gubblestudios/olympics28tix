@@ -139,20 +139,20 @@ export function EventTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg border bg-card">
-        <table className="w-full text-sm table-fixed">
+        <table className="w-full text-sm" style={{ minWidth: 1050 }}>
           <thead>
             <tr className="olympic-header">
-              <th className="px-1.5 py-2 text-left w-8">★</th>
-              <th className="px-1.5 py-2 text-left w-14"><SortBtn k="score">Score</SortBtn></th>
-              <th className="px-1.5 py-2 text-left w-[120px]"><SortBtn k="sport">Sport</SortBtn></th>
-              <th className="px-1.5 py-2 text-left w-20">Interest</th>
-              <th className="px-1.5 py-2 text-left w-[130px]"><SortBtn k="date">Date</SortBtn></th>
-              <th className="px-1.5 py-2 text-left w-[140px]"><SortBtn k="startTime">Time</SortBtn></th>
-              <th className="px-1.5 py-2 text-left w-[80px]">Type</th>
-              <th className="px-1.5 py-2 text-left">Description</th>
-              <th className="px-1.5 py-2 text-left w-[120px]">Venue</th>
-              <th className="px-1.5 py-2 text-left w-[90px]"><SortBtn k="neighborhood">Area</SortBtn></th>
-              <th className="px-1.5 py-2 text-center w-12">Medal</th>
+              <th className="px-2 py-2 text-left" style={{ width: 36 }}>★</th>
+              <th className="px-2 py-2 text-left" style={{ width: 60 }}><SortBtn k="score">Score</SortBtn></th>
+              <th className="px-2 py-2 text-left" style={{ width: 130 }}><SortBtn k="sport">Sport</SortBtn></th>
+              <th className="px-2 py-2 text-left" style={{ width: 110 }}>Interest</th>
+              <th className="px-2 py-2 text-left" style={{ width: 130 }}><SortBtn k="date">Date</SortBtn></th>
+              <th className="px-2 py-2 text-left whitespace-nowrap" style={{ width: 150 }}><SortBtn k="startTime">Time</SortBtn></th>
+              <th className="px-2 py-2 text-left" style={{ width: 80 }}>Type</th>
+              <th className="px-2 py-2 text-left" style={{ minWidth: 120 }}>Description</th>
+              <th className="px-2 py-2 text-left" style={{ width: 120 }}>Venue</th>
+              <th className="px-2 py-2 text-left" style={{ width: 100 }}><SortBtn k="neighborhood">Area</SortBtn></th>
+              <th className="px-2 py-2 text-center" style={{ width: 45 }}>Medal</th>
             </tr>
           </thead>
           <tbody>
@@ -165,28 +165,28 @@ export function EventTable({
                   className={`border-t hover:bg-muted/50 transition-colors cursor-pointer ${isConflict ? "conflict-row" : ""} ${isShort ? "shortlisted-row" : ""}`}
                   onClick={() => onToggleShortlist(ev.sessionCode)}
                 >
-                  <td className="px-1.5 py-1.5 text-center">
+                  <td className="px-2 py-1.5 text-center">
                     <span className={`text-lg ${isShort ? "text-accent" : "text-muted-foreground/30"}`}>
                       {isShort ? "★" : "☆"}
                     </span>
                   </td>
-                  <td className="px-1.5 py-1.5 relative group">
+                  <td className="px-2 py-1.5 relative group">
                     <span className={getScoreBadgeClass(scores[ev.sessionCode] ?? 0)}>
                       {scores[ev.sessionCode] ?? 0}
                     </span>
                     <ScoreTooltip event={ev} weights={weights} sportInterests={sportInterests} />
                   </td>
-                  <td className="px-1.5 py-1.5 font-medium text-xs truncate" title={ev.sport}>{ev.sport}</td>
-                  <td className="px-1.5 py-1.5">
+                  <td className="px-2 py-1.5 font-medium text-xs" title={ev.sport}>{ev.sport}</td>
+                  <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
                     <StarRating value={sportInterests[ev.sport] ?? 0} onChange={(v) => onInterestChange(ev.sport, v)} />
                   </td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={formatDate(ev.dateParsed)}>{formatDate(ev.dateParsed)}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={`${formatTime(ev.startTime)}–${formatTime(ev.endTime)}`}>{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={ev.sessionType}>{ev.sessionType}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={ev.sessionDescription}>{ev.sessionDescription}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={ev.venue}>{ev.venue}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={ev.neighborhood}>{ev.neighborhood}</td>
-                  <td className="px-1.5 py-1.5 text-center">
+                  <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatDate(ev.dateParsed)}</td>
+                  <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
+                  <td className="px-2 py-1.5 text-xs">{ev.sessionType}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" title={ev.sessionDescription}>{ev.sessionDescription}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" title={ev.venue}>{ev.venue}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" title={ev.neighborhood}>{ev.neighborhood}</td>
+                  <td className="px-2 py-1.5 text-center">
                     {ev.isMedalEvent && <span className="text-accent text-xs font-bold">🏅</span>}
                   </td>
                 </tr>
