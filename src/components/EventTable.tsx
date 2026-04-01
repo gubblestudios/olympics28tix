@@ -131,23 +131,10 @@ export function EventTable({
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-2">
-        <select value={filterSport} onChange={(e) => onFilterSport(e.target.value)} className={selectClass}>
-          <option value="">All Sports</option>
-          {sports.map((s) => <option key={s} value={s}>{s}</option>)}
-        </select>
-        <select value={filterType} onChange={(e) => onFilterType(e.target.value)} className={selectClass}>
-          <option value="">All Types</option>
-          {types.map((t) => <option key={t} value={t}>{t}</option>)}
-        </select>
-        <select value={filterNeighborhood} onChange={(e) => onFilterNeighborhood(e.target.value)} className={selectClass}>
-          <option value="">All Neighborhoods</option>
-          {hoods.map((n) => <option key={n} value={n}>{n}</option>)}
-        </select>
-        <select value={filterDay} onChange={(e) => setFilterDay(e.target.value)} className={selectClass}>
-          <option value="">All Days</option>
-          <option value="weekend">Weekend</option>
-          <option value="weekday">Weekday</option>
-        </select>
+        <MultiSelectFilter label="All Sports" options={sports} selected={filterSports} onChange={setFilterSports} />
+        <MultiSelectFilter label="All Types" options={types} selected={filterTypes} onChange={setFilterTypes} />
+        <MultiSelectFilter label="All Areas" options={hoods} selected={filterHoods} onChange={setFilterHoods} />
+        <MultiSelectFilter label="All Days" options={dayOptions} selected={filterDays} onChange={setFilterDays} />
         <div className="flex gap-4 text-xs text-muted-foreground self-center ml-auto items-center">
           <span className="flex items-center gap-1.5">
             <span className="w-4 h-3 rounded bg-accent/20 border border-accent/40" /> Starred
