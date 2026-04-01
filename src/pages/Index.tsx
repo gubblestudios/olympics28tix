@@ -87,9 +87,12 @@ export default function Index() {
   if (step === "sports" && events.length > 0) {
     return (
       <div className="min-h-screen bg-background">
-        <header className="olympic-header px-6 py-4 text-center">
-          <h1 className="text-xl font-bold tracking-tight">🏅 LA 2028 Ticket Planner</h1>
-          <p className="text-xs text-primary-foreground/70">Step 1 of 2 — Rate your sports</p>
+      <header className="olympic-header px-6 py-4 text-center flex flex-col items-center gap-2">
+          <img src={la28Logo} alt="LA 2028" className="h-10" />
+          <div>
+            <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
+            <p className="text-xs text-primary-foreground/70">Step 1 of 2 — Rate your sports</p>
+          </div>
         </header>
         <div className="p-6">
           <SportInterestCards
