@@ -108,6 +108,9 @@ export function EventTable({
         case "sport": cmp = a.sport.localeCompare(b.sport); break;
         case "startTime": cmp = a.startTime.localeCompare(b.startTime); break;
         case "neighborhood": cmp = a.neighborhood.localeCompare(b.neighborhood); break;
+        case "sessionType": cmp = a.sessionType.localeCompare(b.sessionType); break;
+        case "sessionDescription": cmp = a.sessionDescription.localeCompare(b.sessionDescription); break;
+        case "venue": cmp = a.venue.localeCompare(b.venue); break;
       }
       return sortAsc ? cmp : -cmp;
     });
