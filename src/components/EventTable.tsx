@@ -7,6 +7,7 @@ import { ArrowUpDown, ChevronDown } from "lucide-react";
 interface Props {
   events: OlympicEvent[];
   scores: Record<string, number>;
+  weights: Weights;
   sportInterests: Record<string, number>;
   onInterestChange: (sport: string, val: number) => void;
   shortlisted: Set<string>;
