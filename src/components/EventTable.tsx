@@ -75,7 +75,7 @@ function ScoreTooltip({ event, weights, sportInterests }: { event: OlympicEvent;
 
 export function EventTable({
   events, scores, weights, sportInterests, onInterestChange,
-  shortlisted, onToggleShortlist, conflicts,
+  shortlisted, onToggleShortlist, finalList, onToggleFinal, conflicts,
   filterSport, filterType, filterNeighborhood,
   onFilterSport, onFilterType, onFilterNeighborhood,
 }: Props) {
