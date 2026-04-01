@@ -41,7 +41,7 @@ export default function Index() {
   useEffect(() => { localStorage.setItem("la28_weights", JSON.stringify(weights)); }, [weights]);
   useEffect(() => { localStorage.setItem("la28_interests", JSON.stringify(sportInterests)); }, [sportInterests]);
   useEffect(() => { localStorage.setItem("la28_shortlist", JSON.stringify([...shortlisted])); }, [shortlisted]);
-  useEffect(() => { localStorage.setItem("la28_threshold", JSON.stringify(threshold)); }, [threshold]);
+  
 
   const scores = useMemo(() => {
     const map: Record<string, number> = {};
