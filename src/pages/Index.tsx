@@ -82,6 +82,15 @@ export default function Index() {
     });
   }, []);
 
+  const handleToggleFinal = useCallback((code: string) => {
+    setFinalList((prev) => {
+      const next = new Set(prev);
+      if (next.has(code)) next.delete(code);
+      else next.add(code);
+      return next;
+    });
+  }, []);
+
   const handleExport = () => {
     const csv = exportCSV(shortlistEvents, scores);
     const blob = new Blob([csv], { type: "text/csv" });
