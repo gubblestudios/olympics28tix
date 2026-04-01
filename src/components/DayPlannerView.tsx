@@ -17,6 +17,14 @@ function timeToMinutes(t: string): number {
   return h * 60 + m;
 }
 
+function formatTime(t: string): string {
+  if (!t || t === "TBD") return "TBD";
+  const [h, m] = t.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 || 12;
+  return `${h12}:${m.toString().padStart(2, "0")} ${ampm}`;
+}
+
 export function DayPlannerView({
   events,
   scores,
@@ -199,7 +207,7 @@ export function DayPlannerView({
                               <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground">
                                 <span className="flex items-center gap-1">
                                   <Clock className="h-3 w-3" />
-                                  {event.startTime}–{event.endTime}
+                                  {formatTime(event.startTime)}–{formatTime(event.endTime)}
                                 </span>
                                 <span className="flex items-center gap-1">
                                   <MapPin className="h-3 w-3" />

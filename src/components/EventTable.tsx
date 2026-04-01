@@ -4,6 +4,19 @@ import { getScoreBadgeClass, computeScoreWithBreakdown } from "@/lib/scoring";
 import { StarRating } from "./StarRating";
 import { ArrowUpDown, ChevronDown } from "lucide-react";
 
+function formatDate(dateParsed: string): string {
+  const d = new Date(dateParsed + "T00:00:00");
+  return d.toLocaleDateString("en-US", { weekday: "short", month: "long", day: "numeric" });
+}
+
+function formatTime(t: string): string {
+  if (!t || t === "TBD") return "TBD";
+  const [h, m] = t.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 || 12;
+  return `${h12}:${m.toString().padStart(2, "0")} ${ampm}`;
+}
+
 interface Props {
   events: OlympicEvent[];
   scores: Record<string, number>;
@@ -159,8 +172,8 @@ export function EventTable({
                   <td className="p-2">
                     <StarRating value={sportInterests[ev.sport] ?? 0} onChange={(v) => onInterestChange(ev.sport, v)} />
                   </td>
-                  <td className="p-2 whitespace-nowrap text-xs">{ev.dateParsed}</td>
-                  <td className="p-2 whitespace-nowrap text-xs">{ev.startTime}–{ev.endTime}</td>
+                  <td className="p-2 whitespace-nowrap text-xs">{formatDate(ev.dateParsed)}</td>
+                  <td className="p-2 whitespace-nowrap text-xs">{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
                   <td className="p-2 text-xs">{ev.sessionType}</td>
                   <td className="p-2 text-xs max-w-[250px] truncate" title={ev.sessionDescription}>{ev.sessionDescription}</td>
                   <td className="p-2 text-xs whitespace-nowrap">{ev.venue}</td>
