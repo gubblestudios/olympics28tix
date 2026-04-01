@@ -207,7 +207,7 @@ export function DayPlannerView({
                               <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground">
                                 <span className="flex items-center gap-1">
                                   <Clock className="h-3 w-3" />
-                                  {event.startTime}–{event.endTime}
+                                  {formatTime(event.startTime)}–{formatTime(event.endTime)}
                                 </span>
                                 <span className="flex items-center gap-1">
                                   <MapPin className="h-3 w-3" />
