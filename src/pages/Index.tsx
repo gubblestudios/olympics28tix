@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { OlympicEvent, Weights, DEFAULT_WEIGHTS } from "@/lib/types";
 import { loadEvents } from "@/lib/parseCSV";
-import { computeScore, detectConflicts, exportCSV } from "@/lib/scoring";
+import { computeScore, detectConflicts, detectTravelIssues, exportCSV } from "@/lib/scoring";
 import { SummaryCards } from "@/components/SummaryCards";
 import { ScoringPanel } from "@/components/ScoringPanel";
 import { EventTable } from "@/components/EventTable";
