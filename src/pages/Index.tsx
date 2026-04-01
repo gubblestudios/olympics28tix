@@ -9,6 +9,7 @@ import { SportInterestCards } from "@/components/SportInterestCards";
 import { PreferencesCards } from "@/components/PreferencesCards";
 import { DayPlannerView } from "@/components/DayPlannerView";
 import { Download, List, Star, Settings, CalendarDays } from "lucide-react";
+import la28Logo from "@/assets/la28-logo.png";
 
 function loadFromLS<T>(key: string, fallback: T): T {
   try {
@@ -86,9 +87,12 @@ export default function Index() {
   if (step === "sports" && events.length > 0) {
     return (
       <div className="min-h-screen bg-background">
-        <header className="olympic-header px-6 py-4 text-center">
-          <h1 className="text-xl font-bold tracking-tight">🏅 LA 2028 Ticket Planner</h1>
-          <p className="text-xs text-primary-foreground/70">Step 1 of 2 — Rate your sports</p>
+      <header className="olympic-header px-6 py-4 text-center flex flex-col items-center gap-2">
+          <img src={la28Logo} alt="LA 2028" className="h-10" />
+          <div>
+            <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
+            <p className="text-xs text-primary-foreground/70">Step 1 of 2 — Rate your sports</p>
+          </div>
         </header>
         <div className="p-6">
           <SportInterestCards
@@ -107,9 +111,12 @@ export default function Index() {
   if (step === "preferences") {
     return (
       <div className="min-h-screen bg-background">
-        <header className="olympic-header px-6 py-4 text-center">
-          <h1 className="text-xl font-bold tracking-tight">🏅 LA 2028 Ticket Planner</h1>
-          <p className="text-xs text-primary-foreground/70">Step 2 of 2 — Set your preferences</p>
+      <header className="olympic-header px-6 py-4 text-center flex flex-col items-center gap-2">
+          <img src={la28Logo} alt="LA 2028" className="h-10" />
+          <div>
+            <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
+            <p className="text-xs text-primary-foreground/70">Step 2 of 2 — Set your preferences</p>
+          </div>
         </header>
         <div className="p-6">
           <PreferencesCards
@@ -130,9 +137,9 @@ export default function Index() {
     <div className="min-h-screen bg-background">
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">🏅</span>
+          <img src={la28Logo} alt="LA 2028" className="h-9" />
           <div>
-            <h1 className="text-xl font-bold tracking-tight">LA 2028 Ticket Planner</h1>
+            <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
             <p className="text-xs text-primary-foreground/70">Diana's Olympic Session Picker</p>
           </div>
         </div>
