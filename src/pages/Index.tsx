@@ -50,6 +50,12 @@ export default function Index() {
   }, [events, weights, sportInterests]);
 
   const conflicts = useMemo(() => detectConflicts(events, shortlisted), [events, shortlisted]);
+  const shortlistCodes = useMemo(() => {
+    const codes = new Set(shortlisted);
+    events.forEach((e) => { if ((scores[e.sessionCode] ?? 0) >= threshold) codes.add(e.sessionCode); });
+    return codes;
+  }, [events, shortlisted, scores, threshold]);
+  const travelWarnings = useMemo(() => detectTravelIssues(events, shortlistCodes), [events, shortlistCodes]);
 
   const shortlistEvents = useMemo(() => {
     return events.filter((e) => shortlisted.has(e.sessionCode) || (scores[e.sessionCode] ?? 0) >= threshold);
