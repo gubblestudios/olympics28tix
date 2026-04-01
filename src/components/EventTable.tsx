@@ -165,28 +165,28 @@ export function EventTable({
                   className={`border-t hover:bg-muted/50 transition-colors cursor-pointer ${isConflict ? "conflict-row" : ""} ${isShort ? "shortlisted-row" : ""}`}
                   onClick={() => onToggleShortlist(ev.sessionCode)}
                 >
-                  <td className="px-1.5 py-1.5 text-center">
+                  <td className="px-2 py-1.5 text-center">
                     <span className={`text-lg ${isShort ? "text-accent" : "text-muted-foreground/30"}`}>
                       {isShort ? "★" : "☆"}
                     </span>
                   </td>
-                  <td className="px-1.5 py-1.5 relative group">
+                  <td className="px-2 py-1.5 relative group">
                     <span className={getScoreBadgeClass(scores[ev.sessionCode] ?? 0)}>
                       {scores[ev.sessionCode] ?? 0}
                     </span>
                     <ScoreTooltip event={ev} weights={weights} sportInterests={sportInterests} />
                   </td>
-                  <td className="px-1.5 py-1.5 font-medium text-xs truncate" title={ev.sport}>{ev.sport}</td>
-                  <td className="px-1.5 py-1.5">
+                  <td className="px-2 py-1.5 font-medium text-xs" title={ev.sport}>{ev.sport}</td>
+                  <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
                     <StarRating value={sportInterests[ev.sport] ?? 0} onChange={(v) => onInterestChange(ev.sport, v)} />
                   </td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={formatDate(ev.dateParsed)}>{formatDate(ev.dateParsed)}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={`${formatTime(ev.startTime)}–${formatTime(ev.endTime)}`}>{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={ev.sessionType}>{ev.sessionType}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={ev.sessionDescription}>{ev.sessionDescription}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={ev.venue}>{ev.venue}</td>
-                  <td className="px-1.5 py-1.5 text-xs truncate" title={ev.neighborhood}>{ev.neighborhood}</td>
-                  <td className="px-1.5 py-1.5 text-center">
+                  <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatDate(ev.dateParsed)}</td>
+                  <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
+                  <td className="px-2 py-1.5 text-xs">{ev.sessionType}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" title={ev.sessionDescription}>{ev.sessionDescription}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" title={ev.venue}>{ev.venue}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" title={ev.neighborhood}>{ev.neighborhood}</td>
+                  <td className="px-2 py-1.5 text-center">
                     {ev.isMedalEvent && <span className="text-accent text-xs font-bold">🏅</span>}
                   </td>
                 </tr>
