@@ -206,6 +206,7 @@ export default function Index() {
             <EventTable
               events={displayEvents}
               scores={scores}
+              weights={weights}
               sportInterests={sportInterests}
               onInterestChange={handleInterest}
               shortlisted={shortlisted}
