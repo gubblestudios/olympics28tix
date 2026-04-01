@@ -5,8 +5,6 @@ import { SlidersHorizontal } from "lucide-react";
 interface Props {
   weights: Weights;
   onChange: (w: Weights) => void;
-  threshold: number;
-  onThresholdChange: (t: number) => void;
 }
 
 const LABELS: { key: keyof Weights; label: string; desc: string }[] = [
