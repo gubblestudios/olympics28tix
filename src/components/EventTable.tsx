@@ -71,27 +71,32 @@ function ScoreTooltip({ event, weights, sportInterests }: { event: OlympicEvent;
 export function EventTable({
   events, scores, weights, sportInterests, onInterestChange,
   shortlisted, onToggleShortlist, finalList, onToggleFinal, conflicts,
-  filterSport, filterType, filterNeighborhood,
-  onFilterSport, onFilterType, onFilterNeighborhood,
 }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>("score");
   const [sortAsc, setSortAsc] = useState(false);
-  const [filterDay, setFilterDay] = useState("");
+  const [filterSports, setFilterSports] = useState<Set<string>>(new Set());
+  const [filterTypes, setFilterTypes] = useState<Set<string>>(new Set());
+  const [filterHoods, setFilterHoods] = useState<Set<string>>(new Set());
+  const [filterDays, setFilterDays] = useState<Set<string>>(new Set());
 
   const sports = useMemo(() => [...new Set(events.map((e) => e.sport))].sort(), [events]);
   const types = useMemo(() => [...new Set(events.map((e) => e.sessionType))].sort(), [events]);
   const hoods = useMemo(() => [...new Set(events.map((e) => e.neighborhood))].sort(), [events]);
+  const dayOptions = ["Weekend", "Weekday"];
 
   const filtered = useMemo(() => {
     return events.filter((e) => {
-      if (filterSport && e.sport !== filterSport) return false;
-      if (filterType && e.sessionType !== filterType) return false;
-      if (filterNeighborhood && e.neighborhood !== filterNeighborhood) return false;
-      if (filterDay === "weekend" && !isWeekend(e.dateParsed)) return false;
-      if (filterDay === "weekday" && isWeekend(e.dateParsed)) return false;
+      if (filterSports.size > 0 && !filterSports.has(e.sport)) return false;
+      if (filterTypes.size > 0 && !filterTypes.has(e.sessionType)) return false;
+      if (filterHoods.size > 0 && !filterHoods.has(e.neighborhood)) return false;
+      if (filterDays.size > 0) {
+        const isWknd = isWeekend(e.dateParsed);
+        if (filterDays.has("Weekend") && !filterDays.has("Weekday") && !isWknd) return false;
+        if (filterDays.has("Weekday") && !filterDays.has("Weekend") && isWknd) return false;
+      }
       return true;
     });
-  }, [events, filterSport, filterType, filterNeighborhood, filterDay]);
+  }, [events, filterSports, filterTypes, filterHoods, filterDays]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
