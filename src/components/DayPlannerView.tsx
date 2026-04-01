@@ -163,6 +163,7 @@ export function DayPlannerView({
                   const badgeClass = getScoreBadgeClass(score);
                   const isConflict = conflicts.has(event.sessionCode);
                   const isStarred = shortlisted.has(event.sessionCode);
+                  const isFinal = finalList.has(event.sessionCode);
                   const icon = SPORT_ICONS[event.sport] ?? "🏟️";
 
                   // Check for warnings between this event and the next
