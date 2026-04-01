@@ -38,9 +38,11 @@ export function DayPlannerView({
   const [showOnlyConflicts, setShowOnlyConflicts] = useState(false);
 
   const filteredEvents = useMemo(() => {
-    if (!showOnlyStarred) return events;
-    return events.filter((e) => shortlisted.has(e.sessionCode));
-  }, [events, shortlisted, showOnlyStarred]);
+    let result = events;
+    if (showOnlyStarred) result = result.filter((e) => shortlisted.has(e.sessionCode));
+    if (showOnlyConflicts) result = result.filter((e) => conflicts.has(e.sessionCode));
+    return result;
+  }, [events, shortlisted, showOnlyStarred, showOnlyConflicts, conflicts]);
 
   const dayGroups = useMemo(() => {
     const byDate: Record<string, OlympicEvent[]> = {};
