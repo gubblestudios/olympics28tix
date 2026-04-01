@@ -120,10 +120,10 @@ export default function Index() {
     return (
       <div className="min-h-screen bg-background">
       <header className="olympic-header px-6 py-4 text-center flex flex-col items-center gap-2">
-          <img src={la28Logo} alt="LA 2028" className="h-10" />
+          <img src={la28Logo} alt="LA 2028" className="h-16" />
           <div>
             <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
-            <p className="text-xs text-primary-foreground/70">Step 2 of 2 — Set your preferences</p>
+            <p className="text-xs text-muted-foreground">Step 2 of 2 — Set your preferences</p>
           </div>
         </header>
         <div className="p-6">
