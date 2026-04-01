@@ -35,7 +35,7 @@ export function DayPlannerView({
 
   const dayGroups = useMemo(() => {
     const byDate: Record<string, OlympicEvent[]> = {};
-    events.forEach((e) => {
+    filteredEvents.forEach((e) => {
       (byDate[e.dateParsed] ??= []).push(e);
     });
 
@@ -47,7 +47,7 @@ export function DayPlannerView({
           (a, b) => timeToMinutes(a.startTime) - timeToMinutes(b.startTime)
         ),
       }));
-  }, [events]);
+  }, [filteredEvents]);
 
   // Index travel warnings by pair for quick lookup
   const travelMap = useMemo(() => {
