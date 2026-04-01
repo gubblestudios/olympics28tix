@@ -245,6 +245,18 @@ export function DayPlannerView({
                               {score}
                             </span>
                             <button
+                              onClick={() => onToggleFinal(event.sessionCode)}
+                              className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${
+                                isFinal
+                                  ? "bg-primary/15 text-primary"
+                                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                              }`}
+                              title={isFinal ? "Remove from Final List" : "Add to Final List"}
+                            >
+                              <CheckCircle2 className={`h-3 w-3 ${isFinal ? "fill-primary/20" : ""}`} />
+                              {isFinal ? "Final" : "Add to Final"}
+                            </button>
+                            <button
                               onClick={() => onToggleShortlist(event.sessionCode)}
                               className="p-1.5 rounded hover:bg-muted transition-colors"
                               title={isStarred ? "Remove from shortlist" : "Add to shortlist"}
