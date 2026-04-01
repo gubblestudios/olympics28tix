@@ -24,7 +24,7 @@ interface Props {
 type SortKey = "score" | "date" | "sport" | "startTime" | "neighborhood";
 
 export function EventTable({
-  events, scores, sportInterests, onInterestChange,
+  events, scores, weights, sportInterests, onInterestChange,
   shortlisted, onToggleShortlist, conflicts,
   filterSport, filterType, filterNeighborhood,
   onFilterSport, onFilterType, onFilterNeighborhood,
