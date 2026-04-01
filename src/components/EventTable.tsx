@@ -209,7 +209,7 @@ export function EventTable({
                   <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatDate(ev.dateParsed)}</td>
                   <td className="px-2 py-1.5 text-xs whitespace-nowrap">{formatTime(ev.startTime)}–{formatTime(ev.endTime)}</td>
                   <td className="px-2 py-1.5 text-xs">{ev.sessionType}</td>
-                  <td className="px-2 py-1.5 text-xs truncate" style={{ maxWidth: 210 }} title={ev.sessionDescription}>{ev.sessionDescription}</td>
+                  <td className="px-2 py-1.5 text-xs truncate" style={{ maxWidth: 280 }} title={ev.sessionDescription}>{ev.sessionDescription}</td>
                   <td className="px-2 py-1.5 text-xs truncate" title={ev.venue}>{ev.venue}</td>
                   <td className="px-2 py-1.5 text-xs truncate" title={ev.neighborhood}>{ev.neighborhood}</td>
                   <td className="px-2 py-1.5 text-center">
