@@ -127,7 +127,15 @@ export function EventTable({
           <option value="">All Neighborhoods</option>
           {hoods.map((n) => <option key={n} value={n}>{n}</option>)}
         </select>
-        <span className="text-xs text-muted-foreground self-center ml-auto">{sorted.length} sessions</span>
+        <div className="flex gap-4 text-xs text-muted-foreground self-center ml-auto items-center">
+          <span className="flex items-center gap-1.5">
+            <span className="w-4 h-3 rounded bg-accent/20 border border-accent/40" /> Starred
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-4 h-3 rounded bg-destructive/10 border-l-4 border-destructive" /> Time Conflict
+          </span>
+          <span>{sorted.length} sessions</span>
+        </div>
       </div>
 
       <div className="overflow-x-auto rounded-lg border bg-card">
