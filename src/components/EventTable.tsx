@@ -150,7 +150,7 @@ export function EventTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg border bg-card">
-        <table className="text-sm" style={{ minWidth: 1311, tableLayout: "fixed", width: 1311 }}>
+        <table className="text-sm" style={{ minWidth: 1411, tableLayout: "fixed", width: 1411 }}>
           <thead>
             <tr className="olympic-header">
               <th className="px-2 py-2 text-left" style={{ width: 36 }}>★</th>
@@ -166,6 +166,7 @@ export function EventTable({
               <th className="px-2 py-2 text-left" style={{ width: 70 }}><SortBtn k="venue">Venue</SortBtn></th>
               <th className="px-2 py-2 text-left" style={{ width: 100 }}><SortBtn k="neighborhood">Area</SortBtn></th>
               <th className="px-2 py-2 text-center" style={{ width: 60 }}>Medal</th>
+              <th className="px-2 py-2 text-left" style={{ width: 100 }}>Code</th>
             </tr>
           </thead>
           <tbody>
@@ -218,6 +219,7 @@ export function EventTable({
                   <td className="px-2 py-1.5 text-center">
                     {ev.isMedalEvent && <span className="text-accent text-xs font-bold">🏅</span>}
                   </td>
+                  <td className="px-2 py-1.5 text-xs font-mono text-muted-foreground">{ev.sessionCode}</td>
                 </tr>
               );
             })}
