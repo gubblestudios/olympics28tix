@@ -44,16 +44,16 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
                 Los Angeles 2028 Olympic Games
               </p>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight">
-                Find Your
+                Schedule
                 <br />
-                Session.
+                Like a Pro.
                 <br />
                 <span className="bg-gradient-to-r from-[hsl(var(--la28-yellow))] to-[hsl(var(--la28-orange))] bg-clip-text text-transparent">
                   Own the Moment.
                 </span>
               </h1>
               <p className="text-lg text-white/70 mt-6 max-w-lg leading-relaxed">
-                Score, rank, and plan your perfect Olympic experience for the LA28 Games.
+                The smarter way to plan your LA28. We break down popular sessions by score, rank, and logistics to make planning simpler.
               </p>
             </div>
 
