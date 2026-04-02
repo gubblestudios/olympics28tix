@@ -86,10 +86,6 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
                   height={960}
                 />
               </div>
-              {/* Floating card */}
-              <div className="absolute -bottom-8 -left-8 sm:-left-16 z-20">
-                <FloatingSessionCard />
-              </div>
             </div>
           </div>
         </div>
