@@ -42,6 +42,11 @@
     --navy: 215 65% 14%;
     --navy-light: 215 45% 22%;
 
+    /* Birds-of-Paradise LA28 palette */
+    --la28-purple: 271 62% 38%;
+    --la28-orange: 28 100% 50%;
+    --la28-yellow: 50 100% 50%;
+
     --sidebar-background: 215 65% 14%;
     --sidebar-foreground: 210 20% 90%;
     --sidebar-primary: 42 65% 55%;
