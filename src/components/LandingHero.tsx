@@ -117,6 +117,12 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
           <p className="text-sm text-white/40">
             LA28 Ticket Planner — A personal planning tool. Not affiliated with the IOC or LA28 Organizing Committee.
           </p>
+          <p className="pt-8 text-center" style={{ fontSize: '10px', color: '#9CA3AF', fontFamily: 'Inter, sans-serif' }}>
+            Made in LA. Strategy &amp; Design by{' '}
+            <a href="https://www.linkedin.com/in/dolympia" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/60 transition-colors" style={{ color: '#9CA3AF' }}>
+              AI Made Simpler
+            </a>
+          </p>
         </div>
       </footer>
     </div>
