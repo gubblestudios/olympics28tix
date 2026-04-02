@@ -19,7 +19,7 @@ function loadFromLS<T>(key: string, fallback: T): T {
   } catch { return fallback; }
 }
 
-type AppStep = "sports" | "preferences" | "results";
+type AppStep = "landing" | "sports" | "preferences" | "results";
 
 export default function Index() {
   const [events, setEvents] = useState<OlympicEvent[]>([]);
