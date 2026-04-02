@@ -1,27 +1,14 @@
 
 
-## Add Legend for Row Highlights
+## Add Session Code Column to Event Table
 
-### Problem
-The table has colored row highlights (yellow/gold for starred events, red for conflicts) but no explanation of what they mean.
+**What**: Add a "Session Code" column as the last column in the results table, after the Medal column. This gives users a quick reference code to search for tickets.
 
-### Solution
-Add a compact inline legend below the filter bar in `EventTable.tsx` showing:
-- **Gold/accent background** = Starred (shortlisted) event
-- **Red left border** = Time conflict with another starred event
+**Changes** (single file: `src/components/EventTable.tsx`):
 
-### Changes
-**`src/components/EventTable.tsx`** — Add a small legend row between the filters and the table:
-```
-<div className="flex gap-4 text-xs text-muted-foreground">
-  <span className="flex items-center gap-1.5">
-    <span className="w-4 h-3 rounded bg-accent/20 border border-accent/40" /> Starred
-  </span>
-  <span className="flex items-center gap-1.5">
-    <span className="w-4 h-3 rounded bg-destructive/10 border-l-4 border-destructive" /> Time Conflict
-  </span>
-</div>
-```
+1. **Increase table width** from 1311px to ~1411px (adding ~100px for the new column)
+2. **Add header** `<th>` for "Code" after the Medal column header, width ~100px
+3. **Add body** `<td>` displaying `ev.sessionCode` after the Medal cell, styled as `text-xs` monospace for easy reading
 
-This sits next to the session count, keeping the UI compact.
+No other files need changes — `sessionCode` is already part of the `OlympicEvent` type and loaded from the CSVs.
 
