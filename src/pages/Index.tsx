@@ -36,7 +36,7 @@ export default function Index() {
   // Determine initial step: if user has already set interests, go straight to results
   const [step, setStep] = useState<AppStep>(() => {
     const saved = loadFromLS<Record<string, number>>("la28_interests", {});
-    return Object.keys(saved).length > 0 ? "results" : "sports";
+    return Object.keys(saved).length > 0 ? "results" : "landing";
   });
 
   useEffect(() => { loadEvents().then(setEvents); }, []);
