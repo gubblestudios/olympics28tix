@@ -8,6 +8,7 @@ import { EventTable } from "@/components/EventTable";
 import { SportInterestCards } from "@/components/SportInterestCards";
 import { PreferencesCards } from "@/components/PreferencesCards";
 import { DayPlannerView } from "@/components/DayPlannerView";
+import { LandingHero } from "@/components/LandingHero";
 import { Download, List, Star, Settings, CalendarDays, CheckCircle2 } from "lucide-react";
 import la28Logo from "@/assets/la28-logo.png";
 
@@ -18,7 +19,7 @@ function loadFromLS<T>(key: string, fallback: T): T {
   } catch { return fallback; }
 }
 
-type AppStep = "sports" | "preferences" | "results";
+type AppStep = "landing" | "sports" | "preferences" | "results";
 
 export default function Index() {
   const [events, setEvents] = useState<OlympicEvent[]>([]);
@@ -35,7 +36,7 @@ export default function Index() {
   // Determine initial step: if user has already set interests, go straight to results
   const [step, setStep] = useState<AppStep>(() => {
     const saved = loadFromLS<Record<string, number>>("la28_interests", {});
-    return Object.keys(saved).length > 0 ? "results" : "sports";
+    return Object.keys(saved).length > 0 ? "results" : "landing";
   });
 
   useEffect(() => { loadEvents().then(setEvents); }, []);
@@ -105,6 +106,11 @@ export default function Index() {
     a.click();
     URL.revokeObjectURL(url);
   };
+
+  // Landing page
+  if (step === "landing") {
+    return <LandingHero onGetStarted={() => setStep("sports")} />;
+  }
 
   // Onboarding steps
   if (step === "sports" && events.length > 0) {
