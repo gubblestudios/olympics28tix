@@ -114,11 +114,11 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
           </svg>
         </div>
         <div className="relative max-w-7xl mx-auto px-6 text-center">
-          <p className="text-xs" style={{ color: '#3A125E' }}>
+          <p className="text-sm" style={{ color: '#3A125E' }}>
             LA28 Ticket Planner — A personal planning tool. Not affiliated with the IOC or LA28 Organizing Committee.
           </p>
-          <p className="pt-8 text-sm" style={{ color: '#3A125E' }}>
-            Made in LA. Strategy &amp; Design by{' '}
+          <p className="pt-8 text-xs" style={{ color: '#3A125E' }}>
+            Made in LA. Concept &amp; Implementation by{' '}
             <a href="https://www.linkedin.com/in/dolympia" target="_blank" rel="noopener noreferrer" className="font-bold underline decoration-1 hover:opacity-70 transition-opacity" style={{ color: '#3A125E' }}>
               AI Made Simpler
             </a>
