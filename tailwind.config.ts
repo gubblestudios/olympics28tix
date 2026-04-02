@@ -53,6 +53,9 @@ export default {
         "score-high": "hsl(var(--score-high))",
         "score-mid": "hsl(var(--score-mid))",
         "score-low": "hsl(var(--score-low))",
+        "la28-purple": "hsl(var(--la28-purple))",
+        "la28-orange": "hsl(var(--la28-orange))",
+        "la28-yellow": "hsl(var(--la28-yellow))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

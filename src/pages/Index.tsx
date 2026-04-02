@@ -107,6 +107,11 @@ export default function Index() {
     URL.revokeObjectURL(url);
   };
 
+  // Landing page
+  if (step === "landing") {
+    return <LandingHero onGetStarted={() => setStep("sports")} />;
+  }
+
   // Onboarding steps
   if (step === "sports" && events.length > 0) {
     return (
