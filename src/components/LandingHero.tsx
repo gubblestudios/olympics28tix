@@ -53,7 +53,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
                 </span>
               </h1>
               <p className="text-lg text-white/70 mt-6 max-w-lg leading-relaxed">
-                The definitive schedule and ticketing guide for the Los Angeles 2028 Olympic Games. Score, rank, and plan your perfect Olympic experience.
+                Score, rank, and plan your perfect Olympic experience for the LA28 Games.
               </p>
             </div>
 
