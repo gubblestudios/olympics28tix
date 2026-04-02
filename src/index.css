@@ -90,4 +90,15 @@
   .shortlisted-row {
     @apply bg-accent/10;
   }
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-xl;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
