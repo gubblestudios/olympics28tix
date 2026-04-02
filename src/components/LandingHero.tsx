@@ -103,8 +103,8 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
       </div>
 
       {/* Footer with Olympic rings watermark */}
-      <footer className="relative z-10 border-t border-white/10 py-8 overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none">
+      <footer className="relative z-10 border-t border-white/10 py-12 overflow-hidden bg-white/10">
+        <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
           <svg viewBox="0 0 500 200" className="w-[600px]" fill="none" stroke="white" strokeWidth="8">
             <circle cx="100" cy="100" r="60" />
             <circle cx="180" cy="100" r="60" />
@@ -114,12 +114,12 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
           </svg>
         </div>
         <div className="relative max-w-7xl mx-auto px-6 text-center">
-          <p className="text-sm text-white/40">
+          <p className="text-xs" style={{ color: '#3A125E' }}>
             LA28 Ticket Planner — A personal planning tool. Not affiliated with the IOC or LA28 Organizing Committee.
           </p>
-          <p className="pt-8 text-center" style={{ fontSize: '10px', color: '#9CA3AF', fontFamily: 'Inter, sans-serif' }}>
+          <p className="pt-8 text-sm" style={{ color: '#3A125E' }}>
             Made in LA. Strategy &amp; Design by{' '}
-            <a href="https://www.linkedin.com/in/dolympia" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/60 transition-colors" style={{ color: '#9CA3AF' }}>
+            <a href="https://www.linkedin.com/in/dolympia" target="_blank" rel="noopener noreferrer" className="font-bold underline decoration-1 hover:opacity-70 transition-opacity" style={{ color: '#3A125E' }}>
               AI Made Simpler
             </a>
           </p>
