@@ -116,6 +116,19 @@ export function exportCSV(events: OlympicEvent[], scores: Record<string, number>
   const rows = events.map((e) => {
     const d = new Date(e.dateParsed + "T00:00:00");
     const day = d.toLocaleDateString("en-US", { weekday: "short" });
+    const dateFormatted = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    return [
+      scores[e.sessionCode]?.toString() ?? "", e.sport, day, dateFormatted, e.startTime, e.endTime,
+      e.sessionType, `"${e.sessionDescription}"`, `"${e.venue}"`, `"${e.neighborhood}"`,
+      e.isMedalEvent ? "Yes" : "No", e.sessionCode,
+    ];
+  });
+  return [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+}
+  const headers = ["Score", "Sport", "Day", "Date", "Start", "End", "Type", "Description", "Venue", "Area", "Medal", "Session Code"];
+  const rows = events.map((e) => {
+    const d = new Date(e.dateParsed + "T00:00:00");
+    const day = d.toLocaleDateString("en-US", { weekday: "short" });
     return [
       scores[e.sessionCode]?.toString() ?? "", e.sport, day, e.date, e.startTime, e.endTime,
       e.sessionType, `"${e.sessionDescription}"`, `"${e.venue}"`, `"${e.neighborhood}"`,
