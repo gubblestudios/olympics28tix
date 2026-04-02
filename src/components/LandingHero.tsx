@@ -1,6 +1,6 @@
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { CountdownTimer } from "@/components/CountdownTimer";
-import { FloatingSessionCard } from "@/components/FloatingSessionCard";
+
 import la28Logo from "@/assets/la28-logo.png";
 import heroImg from "@/assets/hero-stadium.jpg";
 
