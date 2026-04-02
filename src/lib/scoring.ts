@@ -112,10 +112,15 @@ export function detectTravelIssues(events: OlympicEvent[], selectedCodes: Set<st
 }
 
 export function exportCSV(events: OlympicEvent[], scores: Record<string, number>): string {
-  const headers = ["Session Code", "Sport", "Date", "Start", "End", "Venue", "Type", "Description", "Medal", "Score"];
-  const rows = events.map((e) => [
-    e.sessionCode, e.sport, e.date, e.startTime, e.endTime, e.venue, e.sessionType, `"${e.sessionDescription}"`,
-    e.isMedalEvent ? "Yes" : "No", scores[e.sessionCode]?.toString() ?? "",
-  ]);
+  const headers = ["Score", "Sport", "Day", "Date", "Start", "End", "Type", "Description", "Venue", "Area", "Medal", "Session Code"];
+  const rows = events.map((e) => {
+    const d = new Date(e.dateParsed + "T00:00:00");
+    const day = d.toLocaleDateString("en-US", { weekday: "short" });
+    return [
+      scores[e.sessionCode]?.toString() ?? "", e.sport, day, e.date, e.startTime, e.endTime,
+      e.sessionType, `"${e.sessionDescription}"`, `"${e.venue}"`, `"${e.neighborhood}"`,
+      e.isMedalEvent ? "Yes" : "No", e.sessionCode,
+    ];
+  });
   return [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
 }
