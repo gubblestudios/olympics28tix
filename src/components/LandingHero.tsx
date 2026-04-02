@@ -1,6 +1,6 @@
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { CountdownTimer } from "@/components/CountdownTimer";
-import { FloatingSessionCard } from "@/components/FloatingSessionCard";
+
 import la28Logo from "@/assets/la28-logo.png";
 import heroImg from "@/assets/hero-stadium.jpg";
 
@@ -53,7 +53,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
                 </span>
               </h1>
               <p className="text-lg text-white/70 mt-6 max-w-lg leading-relaxed">
-                The definitive schedule and ticketing guide for the Los Angeles 2028 Olympic Games. Score, rank, and plan your perfect Olympic experience.
+                Score, rank, and plan your perfect Olympic experience for the LA28 Games.
               </p>
             </div>
 
@@ -85,10 +85,6 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
                   width={1280}
                   height={960}
                 />
-              </div>
-              {/* Floating card */}
-              <div className="absolute -bottom-8 -left-8 sm:-left-16 z-20">
-                <FloatingSessionCard />
               </div>
             </div>
           </div>
