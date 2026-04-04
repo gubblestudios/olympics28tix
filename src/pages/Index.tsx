@@ -263,9 +263,33 @@ export default function Index() {
               finalList={finalList}
               onToggleFinal={handleToggleFinal}
             />
+          ) : tab === "final" ? (
+            <div className="space-y-6">
+              <BudgetPlanner
+                events={finalListEvents}
+                scores={scores}
+                priceMap={priceMap}
+                selectedCategories={selectedCategories}
+                onCategoryChange={handleCategoryChange}
+                budget={budget}
+                onBudgetChange={setBudget}
+              />
+              <EventTable
+                events={finalListEvents}
+                scores={scores}
+                weights={weights}
+                sportInterests={sportInterests}
+                onInterestChange={handleInterest}
+                shortlisted={shortlisted}
+                onToggleShortlist={handleToggleShortlist}
+                finalList={finalList}
+                onToggleFinal={handleToggleFinal}
+                conflicts={conflicts}
+              />
+            </div>
           ) : (
             <EventTable
-              events={tab === "final" ? finalListEvents : displayEvents}
+              events={displayEvents}
               scores={scores}
               weights={weights}
               sportInterests={sportInterests}
