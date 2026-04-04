@@ -130,7 +130,21 @@ export function SportInterestCards({ events, sportInterests: initial, onComplete
       <div className="max-w-4xl mx-auto space-y-3">
         <h3 className="text-lg font-semibold">All Other Sports</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {sports.map(([sport, info]) => {
+          {otherSports.map(renderCard)}
+        </div>
+      </div>
+
+      <div className="flex justify-center pt-4">
+        <button
+          onClick={handleContinue}
+          className={`px-8 py-3 rounded-lg font-semibold text-sm transition-all ${allRated ? "bg-accent text-accent-foreground hover:opacity-90" : "bg-primary text-primary-foreground hover:opacity-90"}`}
+        >
+          {allRated ? "Next →" : "Skip unrated & continue →"}
+        </button>
+      </div>
+    </div>
+  );
+}
           const isExcluded = excluded.has(sport);
           const rated = !isExcluded && (interests[sport] ?? 0) > 0;
           return (
