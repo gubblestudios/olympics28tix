@@ -65,8 +65,14 @@ export default function Index() {
     return map;
   }, [events, weights, sportInterests]);
 
-  const conflicts = useMemo(() => detectConflicts(events, shortlisted), [events, shortlisted]);
-  const travelWarnings = useMemo(() => detectTravelIssues(events, shortlisted), [events, shortlisted]);
+  const combinedList = useMemo(() => {
+    const combined = new Set(shortlisted);
+    finalList.forEach((code) => combined.add(code));
+    return combined;
+  }, [shortlisted, finalList]);
+
+  const conflicts = useMemo(() => detectConflicts(events, combinedList), [events, combinedList]);
+  const travelWarnings = useMemo(() => detectTravelIssues(events, combinedList), [events, combinedList]);
 
   const shortlistEvents = useMemo(() => {
     return events.filter((e) => shortlisted.has(e.sessionCode));
