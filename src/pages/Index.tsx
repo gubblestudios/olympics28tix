@@ -2,12 +2,14 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { OlympicEvent, Weights, DEFAULT_WEIGHTS } from "@/lib/types";
 import { loadEvents } from "@/lib/parseCSV";
 import { computeScore, detectConflicts, detectTravelIssues, exportCSV } from "@/lib/scoring";
+import { loadPrices, PriceMap, getCheapestCategory } from "@/lib/prices";
 import { SummaryCards } from "@/components/SummaryCards";
 import { ScoringPanel } from "@/components/ScoringPanel";
 import { EventTable } from "@/components/EventTable";
 import { SportInterestCards } from "@/components/SportInterestCards";
 import { PreferencesCards } from "@/components/PreferencesCards";
 import { DayPlannerView } from "@/components/DayPlannerView";
+import { BudgetPlanner } from "@/components/BudgetPlanner";
 import { LandingHero } from "@/components/LandingHero";
 import { Download, List, Star, Settings, CalendarDays, CheckCircle2 } from "lucide-react";
 import la28Logo from "@/assets/la28-logo.png";
@@ -27,6 +29,9 @@ export default function Index() {
   const [sportInterests, setSportInterests] = useState<Record<string, number>>(() => loadFromLS("la28_interests", {}));
   const [shortlisted, setShortlisted] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_shortlist", [])));
   const [finalList, setFinalList] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_final", [])));
+  const [priceMap, setPriceMap] = useState<PriceMap>({});
+  const [selectedCategories, setSelectedCategories] = useState<Record<string, string>>(() => loadFromLS("la28_categories", {}));
+  const [budget, setBudget] = useState<number>(() => loadFromLS("la28_budget", 0));
   
   const [tab, setTab] = useState<"all" | "shortlist" | "planner" | "final">("all");
 
@@ -39,11 +44,13 @@ export default function Index() {
     return Object.keys(saved).length > 0 ? "results" : "landing";
   });
 
-  useEffect(() => { loadEvents().then(setEvents); }, []);
+  useEffect(() => { loadEvents().then(setEvents); loadPrices().then(setPriceMap); }, []);
   useEffect(() => { localStorage.setItem("la28_weights", JSON.stringify(weights)); }, [weights]);
   useEffect(() => { localStorage.setItem("la28_interests", JSON.stringify(sportInterests)); }, [sportInterests]);
   useEffect(() => { localStorage.setItem("la28_shortlist", JSON.stringify([...shortlisted])); }, [shortlisted]);
   useEffect(() => { localStorage.setItem("la28_final", JSON.stringify([...finalList])); }, [finalList]);
+  useEffect(() => { localStorage.setItem("la28_categories", JSON.stringify(selectedCategories)); }, [selectedCategories]);
+  useEffect(() => { localStorage.setItem("la28_budget", JSON.stringify(budget)); }, [budget]);
   
 
   const scores = useMemo(() => {
@@ -89,10 +96,22 @@ export default function Index() {
   const handleToggleFinal = useCallback((code: string) => {
     setFinalList((prev) => {
       const next = new Set(prev);
-      if (next.has(code)) next.delete(code);
-      else next.add(code);
+      if (next.has(code)) {
+        next.delete(code);
+      } else {
+        next.add(code);
+        // Auto-set cheapest category if not already set
+        if (!selectedCategories[code] && priceMap[code]) {
+          const cheapest = getCheapestCategory(priceMap[code]);
+          setSelectedCategories((prev) => ({ ...prev, [code]: cheapest.label }));
+        }
+      }
       return next;
     });
+  }, [priceMap, selectedCategories]);
+
+  const handleCategoryChange = useCallback((code: string, category: string) => {
+    setSelectedCategories((prev) => ({ ...prev, [code]: category }));
   }, []);
 
   const handleExport = (list: "shortlist" | "final") => {
@@ -244,9 +263,33 @@ export default function Index() {
               finalList={finalList}
               onToggleFinal={handleToggleFinal}
             />
+          ) : tab === "final" ? (
+            <div className="space-y-6">
+              <BudgetPlanner
+                events={finalListEvents}
+                scores={scores}
+                priceMap={priceMap}
+                selectedCategories={selectedCategories}
+                onCategoryChange={handleCategoryChange}
+                budget={budget}
+                onBudgetChange={setBudget}
+              />
+              <EventTable
+                events={finalListEvents}
+                scores={scores}
+                weights={weights}
+                sportInterests={sportInterests}
+                onInterestChange={handleInterest}
+                shortlisted={shortlisted}
+                onToggleShortlist={handleToggleShortlist}
+                finalList={finalList}
+                onToggleFinal={handleToggleFinal}
+                conflicts={conflicts}
+              />
+            </div>
           ) : (
             <EventTable
-              events={tab === "final" ? finalListEvents : displayEvents}
+              events={displayEvents}
               scores={scores}
               weights={weights}
               sportInterests={sportInterests}
