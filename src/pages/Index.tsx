@@ -56,7 +56,7 @@ export default function Index() {
   useEffect(() => { localStorage.setItem("la28_username", JSON.stringify(userName)); }, [userName]);
 
   const [customizeOpen, setCustomizeOpen] = useState(false);
-  
+  const [welcomeOpen, setWelcomeOpen] = useState(() => !localStorage.getItem("la28_welcome_seen"));
 
   const scores = useMemo(() => {
     const map: Record<string, number> = {};
