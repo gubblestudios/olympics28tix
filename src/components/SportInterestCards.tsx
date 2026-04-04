@@ -145,8 +145,6 @@ export function SportInterestCards({ events, sportInterests: initial, onComplete
     </div>
   );
 }
-          const isExcluded = excluded.has(sport);
-          const rated = !isExcluded && (interests[sport] ?? 0) > 0;
           return (
             <div
               key={sport}
