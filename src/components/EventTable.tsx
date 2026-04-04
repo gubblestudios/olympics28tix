@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Search } from "lucide-react";
 import { OlympicEvent, Weights } from "@/lib/types";
 import { getScoreBadgeClass, computeScoreWithBreakdown } from "@/lib/scoring";
 import { StarRating } from "./StarRating";
@@ -74,6 +75,7 @@ export function EventTable({
 }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>("score");
   const [sortAsc, setSortAsc] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [filterSports, setFilterSports] = useState<Set<string>>(new Set());
   const [filterTypes, setFilterTypes] = useState<Set<string>>(new Set());
   const [filterHoods, setFilterHoods] = useState<Set<string>>(new Set());
@@ -85,7 +87,9 @@ export function EventTable({
   const dayOptions = ["Weekend", "Weekday"];
 
   const filtered = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
     return events.filter((e) => {
+      if (q && !e.sport.toLowerCase().includes(q) && !e.venue.toLowerCase().includes(q) && !e.sessionCode.toLowerCase().includes(q) && !e.sessionDescription.toLowerCase().includes(q)) return false;
       if (filterSports.size > 0 && !filterSports.has(e.sport)) return false;
       if (filterTypes.size > 0 && !filterTypes.has(e.sessionType)) return false;
       if (filterHoods.size > 0 && !filterHoods.has(e.neighborhood)) return false;
@@ -96,7 +100,7 @@ export function EventTable({
       }
       return true;
     });
-  }, [events, filterSports, filterTypes, filterHoods, filterDays]);
+  }, [events, searchQuery, filterSports, filterTypes, filterHoods, filterDays]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
@@ -133,7 +137,17 @@ export function EventTable({
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 items-center">
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Search sport, venue, or code…"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-8 pr-3 py-1.5 text-sm rounded-lg border bg-card text-foreground placeholder:text-muted-foreground w-56 focus:outline-none focus:ring-1 focus:ring-accent"
+          />
+        </div>
         <MultiSelectFilter label="All Sports" options={sports} selected={filterSports} onChange={setFilterSports} />
         <MultiSelectFilter label="All Types" options={types} selected={filterTypes} onChange={setFilterTypes} />
         <MultiSelectFilter label="All Areas" options={hoods} selected={filterHoods} onChange={setFilterHoods} />
