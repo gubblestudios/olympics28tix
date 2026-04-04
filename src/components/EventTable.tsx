@@ -137,7 +137,17 @@ export function EventTable({
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 items-center">
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Search sport, venue, or code…"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-8 pr-3 py-1.5 text-sm rounded-lg border bg-card text-foreground placeholder:text-muted-foreground w-56 focus:outline-none focus:ring-1 focus:ring-accent"
+          />
+        </div>
         <MultiSelectFilter label="All Sports" options={sports} selected={filterSports} onChange={setFilterSports} />
         <MultiSelectFilter label="All Types" options={types} selected={filterTypes} onChange={setFilterTypes} />
         <MultiSelectFilter label="All Areas" options={hoods} selected={filterHoods} onChange={setFilterHoods} />
