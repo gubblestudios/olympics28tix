@@ -29,6 +29,9 @@ export default function Index() {
   const [sportInterests, setSportInterests] = useState<Record<string, number>>(() => loadFromLS("la28_interests", {}));
   const [shortlisted, setShortlisted] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_shortlist", [])));
   const [finalList, setFinalList] = useState<Set<string>>(() => new Set(loadFromLS<string[]>("la28_final", [])));
+  const [priceMap, setPriceMap] = useState<PriceMap>({});
+  const [selectedCategories, setSelectedCategories] = useState<Record<string, string>>(() => loadFromLS("la28_categories", {}));
+  const [budget, setBudget] = useState<number>(() => loadFromLS("la28_budget", 0));
   
   const [tab, setTab] = useState<"all" | "shortlist" | "planner" | "final">("all");
 
