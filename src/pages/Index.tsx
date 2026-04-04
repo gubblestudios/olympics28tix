@@ -13,6 +13,7 @@ import { BudgetPlanner } from "@/components/BudgetPlanner";
 import { LandingHero } from "@/components/LandingHero";
 import { Download, List, Star, Settings, CalendarDays, CheckCircle2, ChevronDown } from "lucide-react";
 import la28Logo from "@/assets/la28-logo.png";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 function loadFromLS<T>(key: string, fallback: T): T {
   try {
