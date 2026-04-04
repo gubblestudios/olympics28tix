@@ -96,10 +96,22 @@ export default function Index() {
   const handleToggleFinal = useCallback((code: string) => {
     setFinalList((prev) => {
       const next = new Set(prev);
-      if (next.has(code)) next.delete(code);
-      else next.add(code);
+      if (next.has(code)) {
+        next.delete(code);
+      } else {
+        next.add(code);
+        // Auto-set cheapest category if not already set
+        if (!selectedCategories[code] && priceMap[code]) {
+          const cheapest = getCheapestCategory(priceMap[code]);
+          setSelectedCategories((prev) => ({ ...prev, [code]: cheapest.label }));
+        }
+      }
       return next;
     });
+  }, [priceMap, selectedCategories]);
+
+  const handleCategoryChange = useCallback((code: string, category: string) => {
+    setSelectedCategories((prev) => ({ ...prev, [code]: category }));
   }, []);
 
   const handleExport = (list: "shortlist" | "final") => {
