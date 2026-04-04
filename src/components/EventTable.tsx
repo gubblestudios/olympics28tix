@@ -75,6 +75,7 @@ export function EventTable({
 }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>("score");
   const [sortAsc, setSortAsc] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [filterSports, setFilterSports] = useState<Set<string>>(new Set());
   const [filterTypes, setFilterTypes] = useState<Set<string>>(new Set());
   const [filterHoods, setFilterHoods] = useState<Set<string>>(new Set());
@@ -86,7 +87,9 @@ export function EventTable({
   const dayOptions = ["Weekend", "Weekday"];
 
   const filtered = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
     return events.filter((e) => {
+      if (q && !e.sport.toLowerCase().includes(q) && !e.venue.toLowerCase().includes(q) && !e.sessionCode.toLowerCase().includes(q) && !e.sessionDescription.toLowerCase().includes(q)) return false;
       if (filterSports.size > 0 && !filterSports.has(e.sport)) return false;
       if (filterTypes.size > 0 && !filterTypes.has(e.sessionType)) return false;
       if (filterHoods.size > 0 && !filterHoods.has(e.neighborhood)) return false;
@@ -97,7 +100,7 @@ export function EventTable({
       }
       return true;
     });
-  }, [events, filterSports, filterTypes, filterHoods, filterDays]);
+  }, [events, searchQuery, filterSports, filterTypes, filterHoods, filterDays]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
