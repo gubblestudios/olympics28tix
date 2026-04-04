@@ -9,10 +9,11 @@ interface Props {
   onComplete: (interests: Record<string, number>) => void;
 }
 
+const POPULAR_SPORTS = ["Artistic Gymnastics", "Athletics", "Basketball", "Football", "Swimming"];
+
 export function SportInterestCards({ events, sportInterests: initial, onComplete }: Props) {
   const [interests, setInterests] = useState<Record<string, number>>(initial);
   const [excluded, setExcluded] = useState<Set<string>>(() => {
-    // Sports with interest === -1 are excluded
     const ex = new Set<string>();
     Object.entries(initial).forEach(([k, v]) => { if (v === -1) ex.add(k); });
     return ex;
@@ -21,16 +22,11 @@ export function SportInterestCards({ events, sportInterests: initial, onComplete
   const toggleExclude = (sport: string) => {
     setExcluded((prev) => {
       const next = new Set(prev);
-      if (next.has(sport)) {
-        next.delete(sport);
-      } else {
-        next.add(sport);
-      }
+      if (next.has(sport)) next.delete(sport);
+      else next.add(sport);
       return next;
     });
   };
-
-  const POPULAR_SPORTS = ["Artistic Gymnastics", "Athletics", "Basketball", "Football", "Swimming"];
 
   const sports = useMemo(() => {
     const map = new Map<string, { count: number; medals: number; venues: string[] }>();
@@ -137,66 +133,6 @@ export function SportInterestCards({ events, sportInterests: initial, onComplete
       <div className="flex justify-center pt-4">
         <button
           onClick={handleContinue}
-          className={`px-8 py-3 rounded-lg font-semibold text-sm transition-all ${allRated ? "bg-accent text-accent-foreground hover:opacity-90" : "bg-primary text-primary-foreground hover:opacity-90"}`}
-        >
-          {allRated ? "Next →" : "Skip unrated & continue →"}
-        </button>
-      </div>
-    </div>
-  );
-}
-          return (
-            <div
-              key={sport}
-              className={`relative bg-card rounded-xl border-2 p-5 transition-all ${isExcluded ? "opacity-50 border-destructive/40" : rated ? "border-accent shadow-md" : "border-border hover:border-muted-foreground/30"}`}
-            >
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2.5">
-                  <span className="text-2xl">{SPORT_ICONS[sport] ?? "🏟️"}</span>
-                  <h3 className={`font-bold text-sm ${isExcluded ? "line-through text-muted-foreground" : ""}`}>{sport}</h3>
-                </div>
-                <button
-                  onClick={() => toggleExclude(sport)}
-                  className={`text-xs px-2 py-1 rounded-md border transition-colors ${isExcluded ? "bg-destructive/10 border-destructive/30 text-destructive hover:bg-destructive/20" : "border-border text-muted-foreground hover:text-destructive hover:border-destructive/30"}`}
-                  title={isExcluded ? "Include this sport" : "Exclude this sport"}
-                >
-                  {isExcluded ? "Excluded ✕" : <X className="h-3.5 w-3.5" />}
-                </button>
-              </div>
-
-              <div className="flex gap-3 text-xs text-muted-foreground mb-4">
-                <span>{info.count} sessions</span>
-                <span>·</span>
-                <span>{info.medals} medal</span>
-                <span>·</span>
-                <span>{info.venues.length} venue{info.venues.length > 1 ? "s" : ""}</span>
-              </div>
-
-              {!isExcluded && (
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Your interest:</span>
-                  <StarRating
-                    value={interests[sport] ?? 0}
-                    onChange={(v) => setInterests((prev) => ({ ...prev, [sport]: v }))}
-                    size="md"
-                  />
-                </div>
-              )}
-              {isExcluded && (
-                <p className="text-xs text-destructive/70">Sessions for this sport will be hidden</p>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="flex justify-center pt-4">
-        <button
-          onClick={() => {
-            const merged = { ...interests };
-            excluded.forEach((s) => { merged[s] = -1; });
-            onComplete(merged);
-          }}
           className={`px-8 py-3 rounded-lg font-semibold text-sm transition-all ${allRated ? "bg-accent text-accent-foreground hover:opacity-90" : "bg-primary text-primary-foreground hover:opacity-90"}`}
         >
           {allRated ? "Next →" : "Skip unrated & continue →"}
