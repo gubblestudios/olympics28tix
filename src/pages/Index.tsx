@@ -11,7 +11,7 @@ import { PreferencesCards } from "@/components/PreferencesCards";
 import { DayPlannerView } from "@/components/DayPlannerView";
 import { BudgetPlanner } from "@/components/BudgetPlanner";
 import { LandingHero } from "@/components/LandingHero";
-import { Download, List, Star, Settings, CalendarDays, CheckCircle2 } from "lucide-react";
+import { Download, List, Star, Settings, CalendarDays, CheckCircle2, ChevronDown } from "lucide-react";
 import la28Logo from "@/assets/la28-logo.png";
 
 function loadFromLS<T>(key: string, fallback: T): T {
