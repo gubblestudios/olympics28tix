@@ -247,6 +247,22 @@ export default function Index() {
           </button>
         </DialogContent>
       </Dialog>
+      <Dialog open={finalTipOpen} onOpenChange={setFinalTipOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Final List 🎟️</DialogTitle>
+            <DialogDescription className="text-sm leading-relaxed pt-2">
+              Play around with different Category prices. Cheapest seats go fastest so be mentally prepared to pay up or pick different events. Reminder: <strong>Soccer tickets have a separate 12 ticket limit</strong>. You can buy up to 12 Soccer tickets + 12 non-Soccer session tickets. Good luck!
+            </DialogDescription>
+          </DialogHeader>
+          <button
+            onClick={() => setFinalTipOpen(false)}
+            className="mt-2 w-full bg-primary text-primary-foreground rounded-lg py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
+          >
+            Got it!
+          </button>
+        </DialogContent>
+      </Dialog>
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img src={la28Logo} alt="LA 2028" className="h-14" />
