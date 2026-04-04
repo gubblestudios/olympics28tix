@@ -61,6 +61,7 @@ export default function Index() {
   const [welcomeOpen, setWelcomeOpen] = useState(() => !localStorage.getItem("la28_welcome_seen"));
   const [shortlistTipOpen, setShortlistTipOpen] = useState(false);
   const [plannerTipOpen, setPlannerTipOpen] = useState(false);
+  const [finalTipOpen, setFinalTipOpen] = useState(false);
 
   const scores = useMemo(() => {
     const map: Record<string, number> = {};
@@ -246,6 +247,22 @@ export default function Index() {
           </button>
         </DialogContent>
       </Dialog>
+      <Dialog open={finalTipOpen} onOpenChange={setFinalTipOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Final List 🎟️</DialogTitle>
+            <DialogDescription className="text-sm leading-relaxed pt-2">
+              Play around with different Category prices. Cheapest seats go fastest so be mentally prepared to pay up or pick different events. Reminder: <strong>Soccer tickets have a separate 12 ticket limit</strong>. You can buy up to 12 Soccer tickets + 12 non-Soccer session tickets. Good luck!
+            </DialogDescription>
+          </DialogHeader>
+          <button
+            onClick={() => setFinalTipOpen(false)}
+            className="mt-2 w-full bg-primary text-primary-foreground rounded-lg py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
+          >
+            Got it!
+          </button>
+        </DialogContent>
+      </Dialog>
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img src={la28Logo} alt="LA 2028" className="h-14" />
@@ -334,7 +351,13 @@ export default function Index() {
               <CalendarDays className="h-4 w-4" /> Day Planner
             </button>
             <button
-              onClick={() => setTab("final")}
+              onClick={() => {
+                setTab("final");
+                if (!localStorage.getItem("la28_final_tip_seen")) {
+                  setFinalTipOpen(true);
+                  localStorage.setItem("la28_final_tip_seen", "1");
+                }
+              }}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "final" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
             >
               <CheckCircle2 className="h-4 w-4" /> Final List ({finalListEvents.length})
