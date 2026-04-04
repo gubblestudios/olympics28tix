@@ -33,5 +33,11 @@ export async function loadEvents(): Promise<OlympicEvent[]> {
     allEvents.push(...events);
   }
 
-  return allEvents;
+  // Deduplicate by session code
+  const seen = new Set<string>();
+  return allEvents.filter((e) => {
+    if (seen.has(e.sessionCode)) return false;
+    seen.add(e.sessionCode);
+    return true;
+  });
 }
