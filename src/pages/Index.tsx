@@ -52,6 +52,9 @@ export default function Index() {
   useEffect(() => { localStorage.setItem("la28_final", JSON.stringify([...finalList])); }, [finalList]);
   useEffect(() => { localStorage.setItem("la28_categories", JSON.stringify(selectedCategories)); }, [selectedCategories]);
   useEffect(() => { localStorage.setItem("la28_budget", JSON.stringify(budget)); }, [budget]);
+  useEffect(() => { localStorage.setItem("la28_username", JSON.stringify(userName)); }, [userName]);
+
+  const [customizeOpen, setCustomizeOpen] = useState(false);
   
 
   const scores = useMemo(() => {
