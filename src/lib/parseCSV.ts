@@ -2,7 +2,7 @@ import Papa from "papaparse";
 import { OlympicEvent } from "./types";
 
 export async function loadEvents(): Promise<OlympicEvent[]> {
-  const files = ["/data/la28_diana_events.csv", "/data/la28_addendum_events.csv", "/data/la28_addendum2_events.csv"];
+  const files = ["/data/la28_diana_events.csv", "/data/la28_addendum_events.csv", "/data/la28_addendum2_events.csv", "/data/la28_sessions_live_delta.csv"];
   const allEvents: OlympicEvent[] = [];
 
   for (const file of files) {
