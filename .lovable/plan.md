@@ -1,14 +1,20 @@
 
 
-## Add Session Code Column to Event Table
+## Fix Popular Sports Name Matching
 
-**What**: Add a "Session Code" column as the last column in the results table, after the Medal column. This gives users a quick reference code to search for tickets.
+The five popular sports aren't all appearing in the top section because the hardcoded names don't match the CSV data. Specifically, "Athletics" should be "Athletics (Track & Field)" and "Football" should be "Football (Soccer)".
 
-**Changes** (single file: `src/components/EventTable.tsx`):
+### Change
 
-1. **Increase table width** from 1311px to ~1411px (adding ~100px for the new column)
-2. **Add header** `<th>` for "Code" after the Medal column header, width ~100px
-3. **Add body** `<td>` displaying `ev.sessionCode` after the Medal cell, styled as `text-xs` monospace for easy reading
+**File: `src/components/SportInterestCards.tsx`** — Update the `POPULAR_SPORTS` array:
 
-No other files need changes — `sessionCode` is already part of the `OlympicEvent` type and loaded from the CSVs.
+```
+// From:
+const POPULAR_SPORTS = ["Artistic Gymnastics", "Athletics", "Basketball", "Football", "Swimming"];
+
+// To:
+const POPULAR_SPORTS = ["Artistic Gymnastics", "Athletics (Track & Field)", "Basketball", "Football (Soccer)", "Swimming"];
+```
+
+Single-line fix, no other files affected.
 
