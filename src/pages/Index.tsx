@@ -61,6 +61,7 @@ export default function Index() {
   const [welcomeOpen, setWelcomeOpen] = useState(() => !localStorage.getItem("la28_welcome_seen"));
   const [shortlistTipOpen, setShortlistTipOpen] = useState(false);
   const [plannerTipOpen, setPlannerTipOpen] = useState(false);
+  const [finalTipOpen, setFinalTipOpen] = useState(false);
 
   const scores = useMemo(() => {
     const map: Record<string, number> = {};
