@@ -192,16 +192,38 @@ export default function Index() {
           <img src={la28Logo} alt="LA 2028" className="h-14" />
           <div>
             <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
-            <p className="text-xs text-muted-foreground">Diana's Olympic Session Picker</p>
+            <p className="text-xs text-muted-foreground">{userName}'s Olympic Session Picker</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 relative">
           <button
-            onClick={() => setStep("sports")}
+            onClick={() => setCustomizeOpen(!customizeOpen)}
             className="text-xs text-muted-foreground hover:text-accent transition-colors border border-border rounded px-3 py-1.5 flex items-center gap-1.5"
           >
-            <Settings className="h-3.5 w-3.5" /> Edit Preferences
+            <Settings className="h-3.5 w-3.5" /> Customize <ChevronDown className="h-3 w-3" />
           </button>
+          {customizeOpen && (
+            <div className="absolute right-0 top-full mt-1 z-50 bg-card border border-border rounded-lg shadow-lg p-3 space-y-2 w-60">
+              <div>
+                <label className="text-xs font-medium text-muted-foreground">Your Name</label>
+                <input
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  className="w-full mt-1 px-2 py-1.5 text-sm rounded border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
+                  placeholder="Enter your name"
+                />
+              </div>
+              <div className="border-t border-border pt-2 space-y-1">
+                <button onClick={() => { setStep("sports"); setCustomizeOpen(false); }} className="w-full text-left text-sm px-2 py-1.5 rounded hover:bg-muted transition-colors">
+                  🏅 Edit Sport Interests
+                </button>
+                <button onClick={() => { setStep("preferences"); setCustomizeOpen(false); }} className="w-full text-left text-sm px-2 py-1.5 rounded hover:bg-muted transition-colors">
+                  ⚙️ Edit Scoring Preferences
+                </button>
+              </div>
+            </div>
+          )}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="text-xs text-muted-foreground hover:text-accent transition-colors border border-border rounded px-3 py-1.5"
