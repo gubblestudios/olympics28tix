@@ -33,6 +33,7 @@ export default function Index() {
   const [priceMap, setPriceMap] = useState<PriceMap>({});
   const [selectedCategories, setSelectedCategories] = useState<Record<string, string>>(() => loadFromLS("la28_categories", {}));
   const [budget, setBudget] = useState<number>(() => loadFromLS("la28_budget", 0));
+  const [quantities, setQuantities] = useState<Record<string, number>>(() => loadFromLS("la28_quantities", {}));
   const [userName, setUserName] = useState<string>(() => loadFromLS("la28_username", "Diana"));
 
   const [tab, setTab] = useState<"all" | "shortlist" | "planner" | "final">("all");
