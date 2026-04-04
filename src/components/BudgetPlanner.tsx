@@ -125,12 +125,18 @@ export function BudgetPlanner({ events, scores, priceMap, selectedCategories, on
           <div className="flex flex-wrap gap-3 text-xs">
             <span className={`px-2 py-1 rounded ${nonFootballOver ? "bg-destructive/10 text-destructive font-semibold" : "bg-muted text-muted-foreground"}`}>
               {nonFootballOver && <AlertTriangle className="h-3 w-3 inline mr-1" />}
-              Non-Football tickets: {nonFootballTickets}/{MAX_TICKETS}
+              Non-Soccer tickets: {nonFootballTickets}/{MAX_TICKETS}
             </span>
             <span className={`px-2 py-1 rounded ${footballOver ? "bg-destructive/10 text-destructive font-semibold" : "bg-muted text-muted-foreground"}`}>
               {footballOver && <AlertTriangle className="h-3 w-3 inline mr-1" />}
-              Football tickets: {footballTickets}/{MAX_TICKETS}
+              Soccer tickets: {footballTickets}/{MAX_TICKETS}
             </span>
+            <button
+              onClick={() => { for (const ev of events) onQuantityChange(ev.sessionCode, 1); }}
+              className="ml-auto px-2 py-1 rounded text-xs font-medium bg-muted text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Reset Qty
+            </button>
           </div>
 
           {budget > 0 && (
