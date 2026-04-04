@@ -33,6 +33,7 @@ export default function Index() {
   const [priceMap, setPriceMap] = useState<PriceMap>({});
   const [selectedCategories, setSelectedCategories] = useState<Record<string, string>>(() => loadFromLS("la28_categories", {}));
   const [budget, setBudget] = useState<number>(() => loadFromLS("la28_budget", 0));
+  const [quantities, setQuantities] = useState<Record<string, number>>(() => loadFromLS("la28_quantities", {}));
   const [userName, setUserName] = useState<string>(() => loadFromLS("la28_username", "Diana"));
 
   const [tab, setTab] = useState<"all" | "shortlist" | "planner" | "final">("all");
@@ -53,6 +54,7 @@ export default function Index() {
   useEffect(() => { localStorage.setItem("la28_final", JSON.stringify([...finalList])); }, [finalList]);
   useEffect(() => { localStorage.setItem("la28_categories", JSON.stringify(selectedCategories)); }, [selectedCategories]);
   useEffect(() => { localStorage.setItem("la28_budget", JSON.stringify(budget)); }, [budget]);
+  useEffect(() => { localStorage.setItem("la28_quantities", JSON.stringify(quantities)); }, [quantities]);
   useEffect(() => { localStorage.setItem("la28_username", JSON.stringify(userName)); }, [userName]);
 
   const [customizeOpen, setCustomizeOpen] = useState(false);
@@ -368,6 +370,8 @@ export default function Index() {
                 onCategoryChange={handleCategoryChange}
                 budget={budget}
                 onBudgetChange={setBudget}
+                quantities={quantities}
+                onQuantityChange={(code, qty) => setQuantities((prev) => ({ ...prev, [code]: qty }))}
               />
               <EventTable
                 events={finalListEvents}
