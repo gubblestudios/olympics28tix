@@ -140,8 +140,10 @@ const LA_TIMES: Record<string, Record<string, number>> = {
   "San Jose":       { "Pasadena": 360, "Downtown LA": 350, "Exposition Park": 350, "USC/Exposition Park": 350, "Universal City": 350, "Inglewood": 350, "Carson": 360, "Van Nuys": 340, "Long Beach": 370, "Anaheim": 380, "San Diego": 480, "Venice": 350, "Pacific Palisades": 350, "San Pedro": 370, "Arcadia": 370, "Whittier": 370, "Industry Hills": 370, "Pomona": 370, "San Clemente": 440, "San Jose": 0 },
 };
 
+export const TRAVEL_TIMES = LA_TIMES;
+
 export function getTravelTime(from: string, to: string): number {
-  return TRAVEL_TIMES[from]?.[to] ?? TRAVEL_TIMES[to]?.[from] ?? 30;
+  return LA_TIMES[from]?.[to] ?? LA_TIMES[to]?.[from] ?? 30;
 }
 
 export interface TravelWarning {
