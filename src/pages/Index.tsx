@@ -205,6 +205,22 @@ export default function Index() {
           </button>
         </DialogContent>
       </Dialog>
+      <Dialog open={shortlistTipOpen} onOpenChange={setShortlistTipOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Your Shortlist ⭐️</DialogTitle>
+            <DialogDescription className="text-sm leading-relaxed pt-2">
+              These are your ⭐️ sessions. You can view these in <strong>Day Planner</strong> to help you narrow down to <strong>Final List</strong> or skip and add directly to Final, where you can also play around with a <strong>Budget Tracker</strong>.
+            </DialogDescription>
+          </DialogHeader>
+          <button
+            onClick={() => setShortlistTipOpen(false)}
+            className="mt-2 w-full bg-primary text-primary-foreground rounded-lg py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
+          >
+            Got it!
+          </button>
+        </DialogContent>
+      </Dialog>
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img src={la28Logo} alt="LA 2028" className="h-14" />
