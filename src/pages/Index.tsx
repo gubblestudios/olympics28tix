@@ -13,6 +13,7 @@ import { BudgetPlanner } from "@/components/BudgetPlanner";
 import { LandingHero } from "@/components/LandingHero";
 import { Download, List, Star, Settings, CalendarDays, CheckCircle2, ChevronDown } from "lucide-react";
 import la28Logo from "@/assets/la28-logo.png";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 function loadFromLS<T>(key: string, fallback: T): T {
   try {
@@ -55,7 +56,7 @@ export default function Index() {
   useEffect(() => { localStorage.setItem("la28_username", JSON.stringify(userName)); }, [userName]);
 
   const [customizeOpen, setCustomizeOpen] = useState(false);
-  
+  const [welcomeOpen, setWelcomeOpen] = useState(() => !localStorage.getItem("la28_welcome_seen"));
 
   const scores = useMemo(() => {
     const map: Record<string, number> = {};
@@ -187,6 +188,22 @@ export default function Index() {
   // Results view
   return (
     <div className="min-h-screen bg-background">
+      <Dialog open={welcomeOpen} onOpenChange={(open) => { setWelcomeOpen(open); if (!open) localStorage.setItem("la28_welcome_seen", "1"); }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Welcome to Your Session Picker! 🎉</DialogTitle>
+            <DialogDescription className="text-sm leading-relaxed pt-2">
+              All sessions are listed with ranked <strong>Scores</strong> based on your preferences. You can filter by individual sport, location, type of event (Final) or type into the <strong>Search</strong> box.
+            </DialogDescription>
+          </DialogHeader>
+          <button
+            onClick={() => { setWelcomeOpen(false); localStorage.setItem("la28_welcome_seen", "1"); }}
+            className="mt-2 w-full bg-primary text-primary-foreground rounded-lg py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
+          >
+            Got it — Let's Go!
+          </button>
+        </DialogContent>
+      </Dialog>
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img src={la28Logo} alt="LA 2028" className="h-14" />
