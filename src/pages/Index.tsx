@@ -44,11 +44,13 @@ export default function Index() {
     return Object.keys(saved).length > 0 ? "results" : "landing";
   });
 
-  useEffect(() => { loadEvents().then(setEvents); }, []);
+  useEffect(() => { loadEvents().then(setEvents); loadPrices().then(setPriceMap); }, []);
   useEffect(() => { localStorage.setItem("la28_weights", JSON.stringify(weights)); }, [weights]);
   useEffect(() => { localStorage.setItem("la28_interests", JSON.stringify(sportInterests)); }, [sportInterests]);
   useEffect(() => { localStorage.setItem("la28_shortlist", JSON.stringify([...shortlisted])); }, [shortlisted]);
   useEffect(() => { localStorage.setItem("la28_final", JSON.stringify([...finalList])); }, [finalList]);
+  useEffect(() => { localStorage.setItem("la28_categories", JSON.stringify(selectedCategories)); }, [selectedCategories]);
+  useEffect(() => { localStorage.setItem("la28_budget", JSON.stringify(budget)); }, [budget]);
   
 
   const scores = useMemo(() => {
