@@ -269,7 +269,13 @@ export default function Index() {
               <List className="h-4 w-4" /> All Sessions
             </button>
             <button
-              onClick={() => setTab("shortlist")}
+              onClick={() => {
+                setTab("shortlist");
+                if (!localStorage.getItem("la28_shortlist_tip_seen")) {
+                  setShortlistTipOpen(true);
+                  localStorage.setItem("la28_shortlist_tip_seen", "1");
+                }
+              }}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "shortlist" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
             >
               <Star className="h-4 w-4" /> My Shortlist ({shortlistEvents.length})
