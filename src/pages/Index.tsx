@@ -335,7 +335,13 @@ export default function Index() {
               <CalendarDays className="h-4 w-4" /> Day Planner
             </button>
             <button
-              onClick={() => setTab("final")}
+              onClick={() => {
+                setTab("final");
+                if (!localStorage.getItem("la28_final_tip_seen")) {
+                  setFinalTipOpen(true);
+                  localStorage.setItem("la28_final_tip_seen", "1");
+                }
+              }}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "final" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
             >
               <CheckCircle2 className="h-4 w-4" /> Final List ({finalListEvents.length})
