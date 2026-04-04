@@ -370,6 +370,8 @@ export default function Index() {
                 onCategoryChange={handleCategoryChange}
                 budget={budget}
                 onBudgetChange={setBudget}
+                quantities={quantities}
+                onQuantityChange={(code, qty) => setQuantities((prev) => ({ ...prev, [code]: qty }))}
               />
               <EventTable
                 events={finalListEvents}
