@@ -58,6 +58,7 @@ export default function Index() {
   const [customizeOpen, setCustomizeOpen] = useState(false);
   const [welcomeOpen, setWelcomeOpen] = useState(() => !localStorage.getItem("la28_welcome_seen"));
   const [shortlistTipOpen, setShortlistTipOpen] = useState(false);
+  const [plannerTipOpen, setPlannerTipOpen] = useState(false);
 
   const scores = useMemo(() => {
     const map: Record<string, number> = {};
@@ -227,6 +228,22 @@ export default function Index() {
           </button>
         </DialogContent>
       </Dialog>
+      <Dialog open={plannerTipOpen} onOpenChange={setPlannerTipOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Day Planner 📅</DialogTitle>
+            <DialogDescription className="text-sm leading-relaxed pt-2">
+              Here are your ⭐️ Shortlist and ✅ Final sessions viewable by day. Conflicts are flagged. Move to <strong>Final List</strong> tab when you're ready to view estimated costs.
+            </DialogDescription>
+          </DialogHeader>
+          <button
+            onClick={() => setPlannerTipOpen(false)}
+            className="mt-2 w-full bg-primary text-primary-foreground rounded-lg py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
+          >
+            Got it!
+          </button>
+        </DialogContent>
+      </Dialog>
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img src={la28Logo} alt="LA 2028" className="h-14" />
@@ -303,7 +320,13 @@ export default function Index() {
               <Star className="h-4 w-4" /> My Shortlist ({shortlistEvents.length})
             </button>
             <button
-              onClick={() => setTab("planner")}
+              onClick={() => {
+                setTab("planner");
+                if (!localStorage.getItem("la28_planner_tip_seen")) {
+                  setPlannerTipOpen(true);
+                  localStorage.setItem("la28_planner_tip_seen", "1");
+                }
+              }}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "planner" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
             >
               <CalendarDays className="h-4 w-4" /> Day Planner
