@@ -102,20 +102,26 @@ export function DayPlannerView({
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <button
-          onClick={() => { setShowOnlyStarred(false); setShowOnlyConflicts(false); }}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${!showOnlyStarred && !showOnlyConflicts ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+          onClick={() => setFilterMode("all")}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filterMode === "all" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
         >
           All Shortlisted
         </button>
         <button
-          onClick={() => { setShowOnlyStarred(true); setShowOnlyConflicts(false); }}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${showOnlyStarred && !showOnlyConflicts ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+          onClick={() => setFilterMode("shortlist")}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filterMode === "shortlist" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
         >
-          <Star className="h-3 w-3" /> Starred Only ({events.filter(e => shortlisted.has(e.sessionCode)).length})
+          <Star className="h-3 w-3" /> Shortlist Only ({events.filter(e => shortlisted.has(e.sessionCode)).length})
         </button>
         <button
-          onClick={() => { setShowOnlyConflicts(true); setShowOnlyStarred(false); }}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${showOnlyConflicts ? "bg-destructive text-destructive-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+          onClick={() => setFilterMode("final")}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filterMode === "final" ? "bg-primary text-primary-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
+        >
+          <CheckCircle2 className="h-3 w-3" /> Final Only ({events.filter(e => finalList.has(e.sessionCode)).length})
+        </button>
+        <button
+          onClick={() => setFilterMode("conflicts")}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filterMode === "conflicts" ? "bg-destructive text-destructive-foreground" : "bg-card border text-foreground hover:bg-muted"}`}
         >
           <AlertTriangle className="h-3 w-3" /> Conflicts ({events.filter(e => conflicts.has(e.sessionCode)).length})
         </button>
