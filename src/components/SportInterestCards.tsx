@@ -9,7 +9,7 @@ interface Props {
   onComplete: (interests: Record<string, number>) => void;
 }
 
-const POPULAR_SPORTS = ["Artistic Gymnastics", "Athletics", "Basketball", "Football", "Swimming"];
+const POPULAR_SPORTS = ["Artistic Gymnastics", "Athletics (Track & Field)", "Basketball", "Football (Soccer)", "Swimming"];
 
 export function SportInterestCards({ events, sportInterests: initial, onComplete }: Props) {
   const [interests, setInterests] = useState<Record<string, number>>(initial);
