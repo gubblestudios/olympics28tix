@@ -1,7 +1,7 @@
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 
-import la28Logo from "@/assets/la28-logo.png";
+
 import heroImg from "@/assets/hero-stadium.jpg";
 
 interface LandingHeroProps {
@@ -22,8 +22,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
       <nav className="relative z-20 glass-card border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={la28Logo} alt="LA 2028" className="h-10" />
-            <span className="text-white font-bold text-lg tracking-tight">Ticket Planner</span>
+            <span className="text-white font-bold text-lg tracking-tight">LA 2028 Ticket Planner</span>
           </div>
           <button
             onClick={onGetStarted}
@@ -41,7 +40,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
           <div className="flex flex-col gap-8">
             <div>
               <p className="text-sm uppercase tracking-[0.25em] text-white/60 font-medium mb-4">
-                Los Angeles 2028 Olympic Games
+                Los Angeles 2028 Games
               </p>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight">
                 Schedule
@@ -102,20 +101,10 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
         </div>
       </div>
 
-      {/* Footer with Olympic rings watermark */}
       <footer className="relative z-10 border-t border-white/10 py-12 overflow-hidden bg-white/10">
-        <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
-          <svg viewBox="0 0 500 200" className="w-[600px]" fill="none" stroke="white" strokeWidth="8">
-            <circle cx="100" cy="100" r="60" />
-            <circle cx="180" cy="100" r="60" />
-            <circle cx="260" cy="100" r="60" />
-            <circle cx="140" cy="150" r="60" />
-            <circle cx="220" cy="150" r="60" />
-          </svg>
-        </div>
         <div className="relative max-w-7xl mx-auto px-6 text-center">
           <p className="text-sm" style={{ color: '#3A125E' }}>
-            LA28 Ticket Planner — A personal planning tool. Not affiliated with the IOC or LA28 Organizing Committee.
+            LA 2028 Ticket Planner — A personal planning tool. Not officially affiliated.
           </p>
           <p className="pt-8 text-xs" style={{ color: '#3A125E' }}>
             Made in LA. Concept &amp; Implementation by{' '}

@@ -12,7 +12,7 @@ import { DayPlannerView } from "@/components/DayPlannerView";
 import { BudgetPlanner } from "@/components/BudgetPlanner";
 import { LandingHero } from "@/components/LandingHero";
 import { Download, List, Star, Settings, CalendarDays, CheckCircle2, ChevronDown } from "lucide-react";
-import la28Logo from "@/assets/la28-logo.png";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 function loadFromLS<T>(key: string, fallback: T): T {
@@ -152,9 +152,8 @@ export default function Index() {
     return (
       <div className="min-h-screen bg-background">
       <header className="olympic-header px-6 py-4 text-center flex flex-col items-center gap-2">
-          <img src={la28Logo} alt="LA 2028" className="h-16" />
           <div>
-            <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
+            <h1 className="text-xl font-bold tracking-tight">LA 2028 Ticket Planner</h1>
             <p className="text-xs text-muted-foreground">Step 1 of 2 — Rate your sports</p>
           </div>
         </header>
@@ -176,9 +175,8 @@ export default function Index() {
     return (
       <div className="min-h-screen bg-background">
       <header className="olympic-header px-6 py-4 text-center flex flex-col items-center gap-2">
-          <img src={la28Logo} alt="LA 2028" className="h-16" />
           <div>
-            <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
+            <h1 className="text-xl font-bold tracking-tight">LA 2028 Ticket Planner</h1>
             <p className="text-xs text-muted-foreground">Step 2 of 2 — Set your preferences</p>
           </div>
         </header>
@@ -265,10 +263,9 @@ export default function Index() {
       </Dialog>
       <header className="olympic-header px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src={la28Logo} alt="LA 2028" className="h-14" />
           <div>
-            <h1 className="text-xl font-bold tracking-tight">Ticket Planner</h1>
-            <p className="text-xs text-muted-foreground">{userName}'s Olympic Session Picker</p>
+            <h1 className="text-xl font-bold tracking-tight">LA 2028 Ticket Planner</h1>
+            <p className="text-xs text-muted-foreground">{userName}'s Session Picker</p>
           </div>
         </div>
         <div className="flex items-center gap-2 relative">
