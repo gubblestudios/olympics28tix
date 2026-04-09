@@ -294,6 +294,9 @@ export default function Index() {
                 <button onClick={() => { setStep("preferences"); setCustomizeOpen(false); }} className="w-full text-left text-sm px-2 py-1.5 rounded hover:bg-muted transition-colors">
                   ⚙️ Edit Scoring Preferences
                 </button>
+                <button onClick={() => { setStep("landing"); setCustomizeOpen(false); }} className="w-full text-left text-sm px-2 py-1.5 rounded hover:bg-muted transition-colors">
+                  🏠 Back to Landing
+                </button>
               </div>
             </div>
           )}
