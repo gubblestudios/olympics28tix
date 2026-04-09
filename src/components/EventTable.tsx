@@ -51,7 +51,7 @@ function ScoreTooltip({ event, weights, sportInterests }: { event: OlympicEvent;
     { label: "Sport Interest", pct: Math.round(breakdown.interest.raw * 100) },
     { label: "Medal Event", pct: Math.round(breakdown.medal.raw * 100) },
     { label: "Indoor", pct: Math.round(breakdown.indoor.raw * 100) },
-    { label: "Neighborhood", pct: Math.round(breakdown.neighborhood.raw * 100) },
+    { label: "DTLA Proximity", pct: Math.round(breakdown.neighborhood.raw * 100) },
     { label: "Time of Day", pct: Math.round(breakdown.evening.raw * 100) },
   ];
   return (

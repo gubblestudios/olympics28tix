@@ -76,8 +76,8 @@ export function PreferencesCards({ initialWeights, onComplete, onBack }: Props) 
             <Home className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-bold text-sm">Neighborhood Convenience</h3>
-            <p className="text-xs text-muted-foreground">How much does proximity to Pasadena matter? Closer venues score higher.</p>
+            <h3 className="font-bold text-sm">Proximity to Downtown LA</h3>
+            <p className="text-xs text-muted-foreground">How much does proximity to Downtown LA matter? Closer venues score higher.</p>
           </div>
         </div>
         <div className="flex items-center gap-4">

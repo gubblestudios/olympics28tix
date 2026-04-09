@@ -11,7 +11,7 @@ const LABELS: { key: keyof Weights; label: string; desc: string }[] = [
   { key: "interest", label: "Sport Interest", desc: "How much I care about this sport" },
   { key: "medal", label: "Medal Event", desc: "Bonus for medal ceremonies" },
   { key: "indoor", label: "Indoor Preference", desc: "I prefer indoor venues" },
-  { key: "neighborhood", label: "Neighborhood", desc: "Closer to DTLA = better" },
+  { key: "neighborhood", label: "DTLA Proximity", desc: "Closer to Downtown LA = better" },
   { key: "evening", label: "Evening Sessions", desc: "I prefer evening over morning" },
 ];
 
