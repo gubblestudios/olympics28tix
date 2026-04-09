@@ -111,6 +111,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
             <a href="https://www.linkedin.com/in/dolympia" target="_blank" rel="noopener noreferrer" className="font-bold underline decoration-1 hover:opacity-70 transition-opacity" style={{ color: '#3A125E' }}>
               AI Made Simpler
             </a>
+            <span className="ml-2 opacity-50">· v1.3</span>
           </p>
         </div>
       </footer>
