@@ -2,7 +2,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 
 
-import heroImg from "@/assets/hero-stadium.jpg";
+import heroImg from "@/assets/hero-stadium.png";
 
 interface LandingHeroProps {
   onGetStarted: () => void;
