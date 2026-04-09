@@ -34,7 +34,7 @@ export default function Index() {
   const [selectedCategories, setSelectedCategories] = useState<Record<string, string>>(() => loadFromLS("la28_categories", {}));
   const [budget, setBudget] = useState<number>(() => loadFromLS("la28_budget", 0));
   const [quantities, setQuantities] = useState<Record<string, number>>(() => loadFromLS("la28_quantities", {}));
-  const [userName, setUserName] = useState<string>(() => loadFromLS("la28_username", "Diana"));
+  const [userName, setUserName] = useState<string>(() => loadFromLS("la28_username", ""));
 
   const [tab, setTab] = useState<"all" | "shortlist" | "planner" | "final">("all");
 
@@ -265,7 +265,7 @@ export default function Index() {
         <div className="flex items-center gap-3">
           <div>
             <h1 className="text-xl font-bold tracking-tight">LA 2028 Ticket Planner</h1>
-            <p className="text-xs text-muted-foreground">{userName}'s Session Picker</p>
+            <p className="text-xs text-muted-foreground">{userName ? `${userName}'s Session Picker` : "My Session Picker"}</p>
           </div>
         </div>
         <div className="flex items-center gap-2 relative">
@@ -278,13 +278,13 @@ export default function Index() {
           {customizeOpen && (
             <div className="absolute right-0 top-full mt-1 z-50 bg-card border border-border rounded-lg shadow-lg p-3 space-y-2 w-60">
               <div>
-                <label className="text-xs font-medium text-muted-foreground">Your Name</label>
+                <label className="text-xs font-medium text-muted-foreground">Display Name (optional)</label>
                 <input
                   type="text"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                   className="w-full mt-1 px-2 py-1.5 text-sm rounded border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
-                  placeholder="Enter your name"
+                  placeholder="My Session Picker"
                 />
               </div>
               <div className="border-t border-border pt-2 space-y-1">
@@ -293,6 +293,9 @@ export default function Index() {
                 </button>
                 <button onClick={() => { setStep("preferences"); setCustomizeOpen(false); }} className="w-full text-left text-sm px-2 py-1.5 rounded hover:bg-muted transition-colors">
                   ⚙️ Edit Scoring Preferences
+                </button>
+                <button onClick={() => { setStep("landing"); setCustomizeOpen(false); }} className="w-full text-left text-sm px-2 py-1.5 rounded hover:bg-muted transition-colors">
+                  🏠 Back to Landing
                 </button>
               </div>
             </div>
