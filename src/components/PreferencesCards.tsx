@@ -12,7 +12,7 @@ interface Props {
 const TIME_LABELS = ["Morning lover 🌅", "No preference", "Evening lover 🌙"];
 const INDOOR_LABELS = ["Prefer outdoor ☀️", "No preference", "Prefer indoor 🏟️"];
 
-const HOOD_ORDER = ["Pasadena", "Downtown LA", "Exposition Park", "Universal City", "Long Beach", "Anaheim"];
+const HOOD_ORDER = ["Downtown LA", "Exposition Park", "Inglewood", "Universal City", "Pasadena", "Long Beach", "Anaheim"];
 
 export function PreferencesCards({ initialWeights, onComplete, onBack }: Props) {
   const [weights, setWeights] = useState<Weights>(initialWeights);
